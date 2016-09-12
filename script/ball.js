@@ -4,7 +4,12 @@ class Ball extends THREE.Mesh {
             material = new THREE.MeshPhongMaterial({color: color});
         super(geometry, material);
 
-        //GAME.scene.add(this);
+        GAME.registerForUpdates(this.update, this);
+    }
+
+    update(that)
+    {
+        // Proof of update functionality, code in the registered function runs every frame
     }
 
     randomizePos()
