@@ -1,4 +1,4 @@
-let GAME;
+let GAME, controls;
 
 $(document).ready(function () {
     initThree();
@@ -10,14 +10,16 @@ function initThree() {
         resizeWindow(GAME);
     });
 
-    initSkybox(GAME, "Positive X.jpg", "Negative X.jpg", "Positive Y.jpg", "Negative Y.jpg", "Positive Z.jpg", "Negative Z.jpg");
+    //initSkybox(GAME, "Positive X.jpg", "Negative X.jpg", "Positive Y.jpg", "Negative Y.jpg", "Positive Z.jpg", "Negative Z.jpg");
 
+    let axes = new THREE.AxisHelper(10);
+    GAME.scene.add(axes);
 
     GAME.render(GAME);
 
     new Sun();
 
-
+    controls = new THREE.OrbitControls(GAME.camera, GAME.renderer.domElement);
 
     GAME.render(GAME);
 }

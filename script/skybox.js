@@ -23,6 +23,5 @@ function initSkybox(gameObject, posx, negx, posy, negy, posz, negz)
     let skyMat = new THREE.MeshFaceMaterial(matArr);
 
     let skyBox = new THREE.Mesh(skyGeom, skyMat);
-    skyBox.position(0,0,0);
     gameObject.scene.add(skyBox);
 }
