@@ -7,20 +7,17 @@ class Ball extends THREE.Mesh {
         GAME.registerForUpdates(this.update, this);
     }
 
-    update(that)
-    {
+    update(that) {
         // Proof of update functionality, code in the registered function runs every frame
     }
 
-    randomizePos()
-    {
+    randomizePos() {
         this.position.x += this.calcPosOffset();
         this.position.y += this.calcPosOffset();
         this.position.z += this.calcPosOffset();
     }
 
-    calcPosOffset()
-    {
+    calcPosOffset() {
         return Math.random() * 10 - 5;
     }
 }
