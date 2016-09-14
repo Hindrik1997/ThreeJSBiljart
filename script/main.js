@@ -10,7 +10,6 @@ function initThree() {
     new Sun();
 }
 
-function getRandomColor()
-{
+function getRandomColor() {
     return Math.floor(Math.random() * 0xffffff);
 }

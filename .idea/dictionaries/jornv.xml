@@ -2,6 +2,8 @@
   <dictionary name="jornv">
     <words>
       <w>antialias</w>
+      <w>collidableobject</w>
+      <w>gameobject</w>
     </words>
   </dictionary>
 </component>
