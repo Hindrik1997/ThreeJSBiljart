@@ -10,21 +10,11 @@ class Game {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         $("body").append(this.renderer.domElement);
 
-
-        // Frames between balls moving
-        this.framesTillReset = 120;
-
         // Initialize update array
         this.updateList = [];
     }
 
     render(that) {
-        if (--that.framesTillReset <= 0) {
-            that.scene.remove(BALLS);
-            addBalls(4);
-            that.framesTillReset = 120;
-        }
-
         that.updateList.forEach(function(element){
             element.function(element.that);
         });
