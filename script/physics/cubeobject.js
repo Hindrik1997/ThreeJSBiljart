@@ -1,5 +1,7 @@
 class CubeObject extends PhysicsObject {
-    constructor(mesh, geometry, material, isMovable) {
-        super(mesh, geometry, material, isMovable, geometry.getBoundingBox());
+    constructor(geometry, material, isMovable) {
+        let mesh = new THREE.Mesh(geometry, material);
+        geometry.computeBoundingBox();
+        super(mesh, geometry, material, isMovable);
     }
 }

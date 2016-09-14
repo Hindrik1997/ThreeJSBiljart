@@ -1,5 +1,7 @@
 class SphereObject extends PhysicsObject {
-    constructor(mesh, geometry, material, isMovable) {
-        super(mesh, geometry, material, isMovable, geometry.getBoundingSphere());
+    constructor(geometry, material, isMovable) {
+        let mesh = new THREE.Mesh(geometry, material);
+        geometry.computeBoundingSphere();
+        super(mesh, geometry, material, isMovable);
     }
 }

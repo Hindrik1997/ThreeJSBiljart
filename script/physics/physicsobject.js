@@ -1,8 +1,8 @@
 class PhysicsObject extends GameObject {
-    constructor(mesh, geometry, material, isMovable, boundingBox) {
+    constructor(mesh, geometry, material, isMovable) {
         super(mesh, geometry, material);
         this._isMovable = isMovable;
-        this._boundingBox = boundingBox;
+        this._geometry = geometry;
     }
 
     get isMoveable() {
@@ -13,18 +13,29 @@ class PhysicsObject extends GameObject {
         this._isMovable = value;
     }
 
-    get boundingBox() {
-        return this._boundingBox;
+    get geometry() {
+        return this._geometry;
     }
 
-    set boundingBox(value) {
-        this._boundingBox = value;
+    set geometry(value) {
+        this._geometry = value;
     }
 
-    isCollidingWith(otherObject)
-    {
-        if(this.boundingBox instanceof THREE.)
+    isCollidingWith(otherObject) {
+        if (this.geometry.boundingBox) {
+            // we are a box
+            if (otherObject.geometry.boundingBox) {
+                // They are a box
+                this.geometry.boundingBox.isIntersectionBox(otherObject.geometry.boundingBox);
+            }
+            else if (otherObject.geometry.boundingSphere) {
+                // They are a sphere
+                this.geometry.boundingBox.isIntersectionSphere(otherObject.geometry.boundingSphere);
+            }
+            else throw Error("Other object is not valid.");
+        }
+        else if (this.geometry.boundingSphere) {
+            // we are a sphere
+        }
     }
-
-    isSphereCollidingWithSphere(otherObject)
 }
