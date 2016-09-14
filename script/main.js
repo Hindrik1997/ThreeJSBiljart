@@ -6,6 +6,8 @@ $(document).ready(function () {
 
 function initThree() {
     GAME = new Game();
+    $(window).resize(function(){resizeWindow(GAME);});
+
     GAME.render(GAME);
     new Sun();
 }
