@@ -1,3 +1,5 @@
-/**
- * Created by hindr on 9/14/2016.
- */
+class SphereObject extends PhysicsObject {
+    constructor(mesh, geometry, material, isMovable) {
+        super(mesh, geometry, material, isMovable, geometry.getBoundingSphere());
+    }
+}
