@@ -6,8 +6,6 @@ class Game {
         this.camera.position.z = 20;
 
         let body = $("body");
-        body.css("width", "100%");
-        body.css("height", "100%");
         body.css("background-color", "#" + getRandomColor().toString(16));
         this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
         this.renderer.setSize(body.width(), body.height());

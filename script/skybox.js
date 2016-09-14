@@ -2,26 +2,41 @@
  * Created by hindr on 9/14/2016.
  */
 
-function initSkybox(gameObject, posx, negx, posy, negy, posz, negz)
+
+class SkyBox
 {
-    let pref = "imgs/";
-
-    let urls = [ pref + posx, pref + negx, pref + posy, pref + negy, pref + posz, pref + negz ];
-
-    let skyGeom = new THREE.CubeGeometry(1000,1000,1000);
-
-    let matArr = [];
-
-    for(let i = 0; i < 6; ++i)
+    constructor(gameObject, posx, negx, posy, negy, posz, negz)
     {
-        matArr.push(new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture(urls[i]),
-            side: THREE.BackSide
-        }));
+        this.gameObjectRef = gameObject;
+        let pref = "imgs/";
+        this.urls = [ pref + posx, pref + negx, pref + posy, pref + negy, pref + posz, pref + negz ];
+        this.skyGeom = new THREE.CubeGeometry(1000,1000,1000);
+        this.matArr = [];
+
+        this.TCL = new THREE.TextureLoader();
+
+        for(let i = 0; i < 6; ++i)
+        {
+            this.matArr.push(new THREE.MeshBasicMaterial({
+                map: this.TCL.load(this.urls[i]),
+                side: THREE.BackSide
+            }));
+        }
+
+        this.skyMat = new THREE.MeshFaceMaterial(this.matArr);
+        this.skyBox = new THREE.Mesh(this.skyGeom, this.skyMat);
+        this.gameObjectRef.scene.add(this.skyBox);
     }
 
-    let skyMat = new THREE.MeshFaceMaterial(matArr);
+    registerForUpdate()
+    {
+        this.gameObjectRef.registerForUpdates(
+            function(that){
+                that.skyBox.position.set(that.gameObjectRef.camera.position.x, that.gameObjectRef.camera.position.y, that.gameObjectRef.camera.position.z);
+            }, this
+        );
+    }
 
-    let skyBox = new THREE.Mesh(skyGeom, skyMat);
-    gameObject.scene.add(skyBox);
+
+
 }
