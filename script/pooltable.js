@@ -4,15 +4,11 @@
 
 class PoolTable
 {
-    constructor(width, height, GameObject)
+    constructor(width, height)
     {
         this.basePlateGeom = new THREE.BoxGeometry(width, 0.2 ,height);
         this.basePlateMat = new THREE.MeshLambertMaterial({ color : "green" });
         this.basePlate = new CubeObject(this.basePlateGeom, this.basePlateMat, false);
-
-        this.gameObjectRef = GameObject;
-        this.gameObjectRef.scene.add(this.basePlate);
-
-
+        GAME.scene.add(this.basePlate.mesh);
     }
 }

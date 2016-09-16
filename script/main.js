@@ -37,7 +37,23 @@ function initThree() {
     GAME.scene.add(TESTCUBE2.mesh);
     GAME.scene.add(TESTSPHERE.mesh);
 
-    pt = new PoolTable(5,8,GAME);
+
+
+    let tcl = new THREE.TextureLoader();
+
+    let grassTex = tcl.load("imgs/grass.jpg");
+
+    grassTex.wrapT = grassTex.wrapS =  THREE.RepeatWrapping;
+    grassTex.repeat.set(50,50);
+
+    let planeGeom = new THREE.PlaneGeometry(1000,1000);
+    planeGeom.rotateX(-Math.PI / 2);
+    let planeMat = new THREE.MeshLambertMaterial({
+        map : grassTex
+    });
+    let grassObj = new THREE.Mesh(planeGeom, planeMat);
+    GAME.scene.add(grassObj);
+    let pt = new PoolTable(5,8,GAME);
 
 
     // Start the render loop
