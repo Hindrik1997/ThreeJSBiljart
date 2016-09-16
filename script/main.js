@@ -30,7 +30,7 @@ function initThree() {
 
     // Create box and ball for collision testing
     TESTCUBE = new CubeObject(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: "green"}));
-    TESTSPHERE = new SphereObject(new THREE.SphereGeometry(2, 10, 10), new THREE.MeshPhongMaterial({color: "pink"}));
+    TESTSPHERE = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "pink"}));
     GAME.scene.add(TESTCUBE.mesh);
     GAME.scene.add(TESTSPHERE.mesh);
 
