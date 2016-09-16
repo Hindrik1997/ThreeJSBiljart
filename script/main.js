@@ -34,6 +34,9 @@ function initThree() {
     GAME.scene.add(TESTCUBE.mesh);
     GAME.scene.add(TESTSPHERE.mesh);
 
+    pt = new PoolTable(5,8,GAME);
+
+
     // Start the render loop
     GAME.render(GAME);
 }

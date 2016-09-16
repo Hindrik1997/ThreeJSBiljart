@@ -6,7 +6,7 @@ class Game {
         this.camera.position.z = 20;
 
         let body = $("body");
-        body.css("background-color", "#" + getRandomColor().toString(16));
+        body.css("background-color", "black");
         this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
         this.renderer.setSize(body.width(), body.height());
         body.append(this.renderer.domElement);
