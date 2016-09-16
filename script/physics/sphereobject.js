@@ -4,4 +4,10 @@ class SphereObject extends PhysicsObject {
         geometry.computeBoundingSphere();
         super(mesh, geometry, material, isMovable);
     }
+
+
+    isCollidingWith(otherObject) {
+        this.mesh.geometry.computeBoundingSphere();
+        return super.isCollidingWith(otherObject);
+    }
 }

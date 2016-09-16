@@ -4,4 +4,10 @@ class CubeObject extends PhysicsObject {
         geometry.computeBoundingBox();
         super(mesh, geometry, material, isMovable);
     }
+
+
+    isCollidingWith(otherObject) {
+        this.mesh.geometry.computeBoundingBox();
+        return super.isCollidingWith(otherObject);
+    }
 }

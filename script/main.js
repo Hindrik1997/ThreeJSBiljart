@@ -1,4 +1,4 @@
-let GAME, controls, skyBox;
+let GAME, COLLISIONCONTROLLER, TESTCUBE, TESTSPHERE, controls, skyBox;
 
 $(document).ready(function () {
     initThree();
@@ -6,6 +6,7 @@ $(document).ready(function () {
 
 function initThree() {
     GAME = new Game();
+    COLLISIONCONTROLLER = new CollisionController();
     $(window).resize(function () {
         resizeWindow(GAME);
     });
@@ -27,6 +28,13 @@ function initThree() {
 
     skyBox.registerForUpdate();
 
+    // Create box and ball for collision testing
+    TESTCUBE = new CubeObject(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: "green"}));
+    TESTSPHERE = new SphereObject(new THREE.SphereGeometry(2, 10, 10), new THREE.MeshPhongMaterial({color: "pink"}));
+    GAME.scene.add(TESTCUBE.mesh);
+    GAME.scene.add(TESTSPHERE.mesh);
+
+    // Start the render loop
     GAME.render(GAME);
 }
 

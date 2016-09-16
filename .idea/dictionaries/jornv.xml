@@ -2,7 +2,10 @@
   <dictionary name="jornv">
     <words>
       <w>antialias</w>
+      <w>collisioncontroller</w>
+      <w>cubeobject</w>
       <w>skybox</w>
+      <w>sphereobject</w>
     </words>
   </dictionary>
 </component>
