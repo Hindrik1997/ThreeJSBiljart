@@ -13,7 +13,8 @@ class SphereObject extends PhysicsObject {
             return this.mesh.position.sub(otherObject.mesh.position).normalize();
         }
         else if (otherObject instanceof CubeObject) {
-            let p = otherObject.boundingBoxHelper.box.closestPointToPoint;
+            // TODO: move this calculation to a location separate from the cube and sphere objects
+            otherObject.isCollidingWith(this);
         }
         else throw Error("Other object is invalid.");
     }
