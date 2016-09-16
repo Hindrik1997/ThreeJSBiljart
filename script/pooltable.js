@@ -6,12 +6,12 @@ class PoolTable
 {
     constructor(width, height, GameObject)
     {
-        this.BasePlateGeom = new THREE.BoxGeometry(width, 0.2 ,height);
-        this.BasePlateMat = new THREE.MeshLambertMaterial({ color : "green" });
-        this.BasePlate = new CubeObject(this.BasePlateGeom, this.BasePlateMat, false);
+        this.basePlateGeom = new THREE.BoxGeometry(width, 0.2 ,height);
+        this.basePlateMat = new THREE.MeshLambertMaterial({ color : "green" });
+        this.basePlate = new CubeObject(this.basePlateGeom, this.basePlateMat, false);
 
-        this.GameObjectRef = GameObject;
-        this.GameObjectRef.scene.add(this.BasePlate);
+        this.gameObjectRef = GameObject;
+        this.gameObjectRef.scene.add(this.basePlate);
 
 
     }
