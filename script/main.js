@@ -21,10 +21,12 @@ function initThree() {
 
     new Sun();
 
-    controls = new THREE.OrbitControls(GAME.camera, GAME.renderer.domElement);
+    controls = new THREE.OrbitControls(GAME.camera, document, GAME.renderer.domElement);
     GAME.registerForUpdates(function(controls){
         controls.update();
     }, controls);
+
+
 
     skyBox.registerForUpdate();
 
