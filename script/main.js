@@ -26,7 +26,8 @@ function initThree() {
         controls.update();
     }, CONTROLS);
 
-
+    var AmbientLight = new THREE.AmbientLight(0x404040);
+    GAME.scene.add(AmbientLight);
 
     SKYBOX.registerForUpdate();
 
@@ -49,6 +50,8 @@ function initThree() {
     let planeGeom = new THREE.PlaneGeometry(1000,1000);
     planeGeom.rotateX(-Math.PI / 2);
     let planeMat = new THREE.MeshPhysicalMaterial({
+        reflectivity : 0,
+        roughness : 0.70,
         map : grassTex
     });
     let grassObj = new THREE.Mesh(planeGeom, planeMat);
