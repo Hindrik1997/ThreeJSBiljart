@@ -1,4 +1,4 @@
-let GAME, COLLISIONCONTROLLER, TESTCUBE, TESTSPHERE, CONTROLS, SKYBOX;
+let GAME, COLLISIONCONTROLLER, PHYSICSNUMBERS, TESTCUBE, TESTSPHERE, CONTROLS, SKYBOX;
 
 $(document).ready(function () {
     initThree();
@@ -7,6 +7,7 @@ $(document).ready(function () {
 function initThree() {
     GAME = new Game();
     COLLISIONCONTROLLER = new CollisionController();
+    PHYSICSNUMBERS = new PhysicsNumbers();
     $(window).resize(function () {
         resizeWindow(GAME);
     });

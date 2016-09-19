@@ -1,9 +1,12 @@
 class SphereObject extends PhysicsObject {
     constructor(geometry, material, isMovable) {
         let mesh = new THREE.Mesh(geometry, material);
-        super(mesh, geometry, material, isMovable);
+        super(mesh, isMovable);
     }
 
+    get maxMovementPerFrame() {
+        return this.mesh.radius;
+    }
 
     isCollidingWith(otherObject) {
         if (otherObject instanceof SphereObject) {

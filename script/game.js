@@ -13,6 +13,17 @@ class Game {
 
         // Initialize update array
         this.updateList = [];
+
+        // Setup frametime clock
+        this.clock = new THREE.Clock(true);
+        this.frameTime = 0;
+        this.registerForUpdates(this.updateFrametime, this);
+
+    }
+
+    //noinspection JSMethodCanBeStatic
+    updateFrametime(that) {
+        that.frameTime = that.clock.getElapsedTime();
     }
 
     render(that) {
