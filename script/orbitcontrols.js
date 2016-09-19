@@ -10,7 +10,7 @@
  */
 /*global THREE, console */
 
-// This set of controls performs orbiting, dollying (zooming), and panning. It maintains
+// This set of CONTROLS performs orbiting, dollying (zooming), and panning. It maintains
 // the "up" direction as +Y, unlike the TrackballControls. Touch on tablet and phones is
 // supported.
 //
@@ -20,8 +20,8 @@
 //
 // This is a drop-in replacement for (most) TrackballControls used in examples.
 // That is, include this js file and wherever you see:
-//    	controls = new THREE.TrackballControls( camera );
-//      controls.target.z = 150;
+//    	CONTROLS = new THREE.TrackballControls( camera );
+//      CONTROLS.target.z = 150;
 // Simple substitute "OrbitControls" and the control should work as-is.
 
 THREE.OrbitControls = function ( object, domElement, localElement ) {

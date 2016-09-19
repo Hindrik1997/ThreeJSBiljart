@@ -1,4 +1,4 @@
-let GAME, COLLISIONCONTROLLER, TESTCUBE, TESTSPHERE, controls, skyBox;
+let GAME, COLLISIONCONTROLLER, TESTCUBE, TESTSPHERE, CONTROLS, SKYBOX;
 
 $(document).ready(function () {
     initThree();
@@ -11,8 +11,8 @@ function initThree() {
         resizeWindow(GAME);
     });
 
-    //skyBox = new SkyBox(GAME, "posx.jpg", "negx.jpg", "posy.jpg", "negy.jpg", "posz.jpg","negz.jpg");
-    skyBox = new SkyBox(GAME, "Positive X.jpg", "Negative X.jpg", "Positive Y.jpg", "Negative Y.jpg", "Positive Z.jpg", "Negative Z.jpg");
+    //SKYBOX = new SkyBox(GAME, "posx.jpg", "negx.jpg", "posy.jpg", "negy.jpg", "posz.jpg","negz.jpg");
+    SKYBOX = new SkyBox(GAME, "Positive X.jpg", "Negative X.jpg", "Positive Y.jpg", "Negative Y.jpg", "Positive Z.jpg", "Negative Z.jpg");
 
     let axes = new THREE.AxisHelper(10);
     GAME.scene.add(axes);
@@ -21,14 +21,14 @@ function initThree() {
 
     new Sun();
 
-    controls = new THREE.OrbitControls(GAME.camera, document, GAME.renderer.domElement);
+    CONTROLS = new THREE.OrbitControls(GAME.camera, document, GAME.renderer.domElement);
     GAME.registerForUpdates(function(controls){
         controls.update();
-    }, controls);
+    }, CONTROLS);
 
 
 
-    skyBox.registerForUpdate();
+    SKYBOX.registerForUpdate();
 
     // Create box and ball for collision testing
     TESTCUBE = new CubeObject(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: "green"}), true);
@@ -48,7 +48,7 @@ function initThree() {
 
     let planeGeom = new THREE.PlaneGeometry(1000,1000);
     planeGeom.rotateX(-Math.PI / 2);
-    let planeMat = new THREE.MeshLambertMaterial({
+    let planeMat = new THREE.MeshPhysicalMaterial({
         map : grassTex
     });
     let grassObj = new THREE.Mesh(planeGeom, planeMat);

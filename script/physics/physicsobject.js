@@ -22,7 +22,7 @@ class PhysicsObject extends GameObject {
     }
 
     collidedWith(otherObject) {
-        // console.log(this.constructor.name, "collided with", otherObject.constructor.name);
+         console.log(this.constructor.name, "collided with", otherObject.constructor.name);
     }
 
     dispose() {
