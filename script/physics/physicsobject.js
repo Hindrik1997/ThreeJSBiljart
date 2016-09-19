@@ -9,10 +9,6 @@ class PhysicsObject extends GameObject {
         return this._isMovable;
     }
 
-    set isMoveable(value) {
-        this._isMovable = value;
-    }
-
     get geometry() {
         return this._geometry;
     }

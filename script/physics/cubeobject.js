@@ -25,4 +25,11 @@ class CubeObject extends PhysicsObject {
     updateBoundingBox(that) {
         that.boundingBoxHelper.update();
     }
+
+    translate(x, y, z) {
+        this.mesh.translateX(x);
+        this.mesh.translateY(y);
+        this.mesh.translateZ(z);
+        this.boundingBoxHelper.update();
+    }
 }
