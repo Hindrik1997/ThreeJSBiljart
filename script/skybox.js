@@ -4,10 +4,10 @@
 
 
 class SkyBox {
-    constructor(gameObject, posx, negx, posy, negy, posz, negz) {
-        this.gameObjectRef = gameObject;
+    constructor(posX, negX, posY, negY, posZ, negZ) {
         let pref = "imgs/";
-        this.urls = [pref + posx, pref + negx, pref + posy, pref + negy, pref + posz, pref + negz];
+        this.urls = [posX, negX, posY, negY, posZ, negZ];
+        console.log("first pos in urls", this.urls[0]);
         this.skyGeom = new THREE.CubeGeometry(1000, 1000, 1000);
         this.matArr = [];
 
@@ -15,20 +15,20 @@ class SkyBox {
 
         for (let i = 0; i < 6; ++i) {
             this.matArr.push(new THREE.MeshBasicMaterial({
-                map: this.TCL.load(this.urls[i]),
+                map: this.TCL.load(pref + this.urls[i]),
                 side: THREE.BackSide
             }));
         }
 
         this.skyMat = new THREE.MeshFaceMaterial(this.matArr);
         this.skyBox = new THREE.Mesh(this.skyGeom, this.skyMat);
-        this.gameObjectRef.scene.add(this.skyBox);
+        GAME.scene.add(this.skyBox);
     }
 
     registerForUpdate() {
-        this.gameObjectRef.registerForUpdates(
+        GAME.registerForUpdates(
             function (that) {
-                that.skyBox.position.set(that.gameObjectRef.camera.position.x, that.gameObjectRef.camera.position.y, that.gameObjectRef.camera.position.z);
+                that.skyBox.position.set(GAME.camera.position.x, GAME.camera.position.y, GAME.camera.position.z);
             }, this
         );
     }
