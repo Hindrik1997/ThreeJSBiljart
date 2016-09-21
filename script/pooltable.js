@@ -8,18 +8,20 @@ class PoolTable
     {
         let tcl = new THREE.TextureLoader();
 
-        let rM = tcl.load("imgs/carpet_roughness.jpg");
+        let aM = tcl.load("imgs/carpet.jpg");
 
-
-        rM.repeat.set(1 -  1 / width,1 -  1/ height);
+        aM.wrapS = aM.wrapT = THREE.RepeatWrapping;
+        aM.repeat.set(width / 2, height / 2);
 
         this.basePlateGeom = new THREE.BoxGeometry(width, 0.2 ,height);
         this.basePlateMat = new THREE.MeshPhysicalMaterial({
-            color : "green",
-            roughnessMap : rM,
-            reflectivity : 0.001,
+            map : aM,
+            roughness : 0.78,
+            reflectivity : 0.95,
             metalness : 0.15
         });
+
+
         this.basePlate = new CubeObject(this.basePlateGeom, this.basePlateMat, false);
         GAME.scene.add(this.basePlate.mesh);
 
