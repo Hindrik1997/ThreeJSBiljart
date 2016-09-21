@@ -32,14 +32,6 @@ function initThree() {
 
     SKYBOX.registerForUpdate();
 
-    // Create box and ball for collision testing
-    TESTCUBE = new CubeObject(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: "green"}), true);
-    TESTCUBE.mesh.translateY(10);
-    TESTSPHERE = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "pink"}), true);
-    TESTSPHERE.mesh.translateX(0.7);
-    GAME.scene.add(TESTCUBE.mesh);
-    GAME.scene.add(TESTSPHERE.mesh);
-
 
 
     let tcl = new THREE.TextureLoader();
@@ -59,6 +51,14 @@ function initThree() {
     let grassObj = new THREE.Mesh(planeGeom, planeMat);
     GAME.scene.add(grassObj);
     let pt = new PoolTable(5,8,GAME);
+
+    // Create box and ball for collision testing
+    // TESTCUBE = new CubeObject(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: "green"}), true);
+    // TESTCUBE.mesh.translateY(10);
+    TESTSPHERE = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "pink"}), true);
+    TESTSPHERE.mesh.translateY(pt.basePlate.mesh.position.y + pt.basePlate.mesh.geometry.parameters.height / 2 + TESTSPHERE.distanceToGround);
+    TESTSPHERE.movement.x = 1;
+    GAME.scene.add(TESTSPHERE.mesh);
 
 
     // Start the render loop

@@ -11,7 +11,8 @@ class PhysicsObject extends GameObject {
     }
 
     get maxMovementPerFrame() {
-        return 0;
+        // Radius multiplier
+        return 2;
     }
 
     get distanceToGround() {
@@ -79,7 +80,7 @@ class PhysicsObject extends GameObject {
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
-        if(this.isOnGround) {
+        if(this.isOnGround && this.movement.y < 0.01) {
             // When close to the ground but not on the ground, set position to on the ground
             console.log(intersectedObjects[0].point.y, this.distanceToGround, this.constructor.name);
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;

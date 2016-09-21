@@ -5,7 +5,7 @@ class SphereObject extends PhysicsObject {
     }
 
     get maxMovementPerFrame() {
-        return this.mesh.geometry.boundingSphere.radius;
+        return super.maxMovementPerFrame * this.mesh.geometry.boundingSphere.radius;
     }
 
     get distanceToGround() {
