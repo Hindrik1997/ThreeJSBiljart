@@ -37,7 +37,7 @@ class PoolTable
 
 
         this.lrSide = new THREE.BoxGeometry(width * 0.05, 0.5, height * 1.05);
-        this.tdSide = new THREE.BoxGeometry(width * 1.05, 0.5, height * 0.05);
+        this.tdSide = new THREE.BoxGeometry(width * 1.05 - (2 * width*0.05) , 0.5, width * 0.05);
 
         this.leftSide = new CubeObject(this.lrSide, this.standMat, false);
         this.rightSide = new CubeObject(this.lrSide, this.standMat, false);
@@ -48,8 +48,8 @@ class PoolTable
         this.leftSide.translate(-width/2, 2.63,0);
         this.rightSide.translate(width/2, 2.63, 0);
 
-        this.topSide.translate(0, 2.63, -height/2);
-        this.downSide.translate(0, 2.63, height / 2);
+        this.topSide.translate(0, 2.63, -height/2 - 0.075);
+        this.downSide.translate(0, 2.63, height / 2 + 0.075);
 
         GAME.scene.add(this.leftSide.mesh);
         GAME.scene.add(this.rightSide.mesh);
