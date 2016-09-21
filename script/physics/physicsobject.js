@@ -31,8 +31,8 @@ class PhysicsObject extends GameObject {
     // Apply the friction and gravity to the movement vector
     //noinspection JSMethodCanBeStatic
     updateMovement(that) {
-        that.movement.set(0.01,0.01,0.01);
-        that.applyMovement();
+        //that.movement.set(0.01,0.01,0.01);
+        //that.applyMovement();
     }
 
     // Translate the object with the numbers in the movement vector, taking the time since the last frame into account
