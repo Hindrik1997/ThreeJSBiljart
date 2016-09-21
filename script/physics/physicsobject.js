@@ -40,8 +40,19 @@ class PhysicsObject extends GameObject {
         // Check if this object is on the ground;
         that.checkGround();
 
-        //that.movement.set(0.01,0.01,0.01);
-        //that.applyMovement();
+        if(that.isOnGround) {
+            // Apply floor friction
+            that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.floorFriction);
+        }
+        else {
+            // Apply gravity
+            that.movement.y -= PHYSICSNUMBERS.gravity;
+        }
+
+        // Apply air friction
+        that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
+
+        that.applyMovement();
     }
 
     // Translate the object with the numbers in the movement vector, taking the time since the last frame into account

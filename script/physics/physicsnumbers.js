@@ -1,7 +1,7 @@
 class PhysicsNumbers {
     constructor() {
-        this.gravity = 9.81;
-        this.airFriction = 1.5;
-        this.floorFriction = 2;
+        this.gravity = 0.01;
+        this.airFriction = 0.9;
+        this.floorFriction = 0.8;
     }
 }
