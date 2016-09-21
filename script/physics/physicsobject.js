@@ -4,11 +4,17 @@ class PhysicsObject extends GameObject {
         this._isMovable = isMovable;
         this.movement = new THREE.Vector3(0, 0, 0);
         this.movementThisFrame = 0;
-        GAME.registerForUpdates(this.updateMovement, this);
+        this.isOnGround = false;
+        this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.01);
+        if (this.isMoveable) GAME.registerForUpdates(this.updateMovement, this);
         COLLISIONCONTROLLER.registerObject(this);
     }
 
     get maxMovementPerFrame() {
+        return 0;
+    }
+
+    get distanceToGround() {
         return 0;
     }
 
@@ -31,7 +37,10 @@ class PhysicsObject extends GameObject {
     // Apply the friction and gravity to the movement vector
     //noinspection JSMethodCanBeStatic
     updateMovement(that) {
-        that.movement.set(0.01,0.01,0.01);
+        // Check if this object is on the ground;
+        that.checkGround();
+
+        that.movement.set(0.01, 0.01, 0.01);
         that.applyMovement();
     }
 
@@ -46,9 +55,24 @@ class PhysicsObject extends GameObject {
         movementCopy.multiplyScalar(GAME.frameTime);
 
         this.movementThisFrame = (this.movement.length() > this.maxMovementPerFrame) ?
-            movementCopy.setLength(this.maxMovementPerFrame).length() : movementCopy.length();
+            this.limitSpeed(movementCopy).length() : movementCopy.length();
 
         this.mesh.position.add(movementCopy);
+    }
+
+    limitSpeed(vector) {
+        console.log("Slowing down...", this.constructor.name);
+        return vector.setLength(this.maxMovementPerFrame);
+    }
+
+    checkGround() {
+        let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
+        this.isOnGround = intersectedObjects.length !== 0;
+        if(this.isOnGround) {
+            // When close to the ground but not on the ground, set position to on the ground
+            console.log(intersectedObjects[0].point.y, this.distanceToGround, this.constructor.name);
+            this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
+        }
     }
 
     dispose() {
