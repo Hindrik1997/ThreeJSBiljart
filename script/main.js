@@ -57,7 +57,7 @@ function initThree() {
     // TESTCUBE.mesh.translateY(10);
     TESTSPHERE = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "pink"}), true);
     TESTSPHERE.mesh.translateY(pt.basePlate.mesh.position.y + pt.basePlate.mesh.geometry.parameters.height / 2 + TESTSPHERE.distanceToGround);
-    TESTSPHERE.movement.x = 1;
+    TESTSPHERE.movement.x = 0.06;
     GAME.scene.add(TESTSPHERE.mesh);
 
 
