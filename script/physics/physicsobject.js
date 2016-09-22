@@ -23,6 +23,10 @@ class PhysicsObject extends GameObject {
         return this._isMovable;
     }
 
+    get isMoving() {
+        return this.movement.length !== 0;
+    }
+
     get geometry() {
         return this._geometry;
     }
@@ -32,28 +36,36 @@ class PhysicsObject extends GameObject {
     }
 
     collidedWith(otherObject) {
-        // console.log(this.constructor.name, "collided with", otherObject.constructor.name);
+        if(otherObject instanceof SphereObject) {
+            let sphereNormal = this.mesh.position.sub(otherObject.mesh.position).normalize();
+            let dotProduct = this.movement.dot(sphereNormal);
+            let totalLength = this.movement.length() + sphereNormal.length();
+            let inAngle = Math.acos((dotProduct / totalLength));
+            console.log("collision", inAngle);
+        }
     }
 
     // Apply the friction and gravity to the movement vector
     //noinspection JSMethodCanBeStatic
     updateMovement(that) {
         // Check if this object is on the ground;
-        that.checkGround();
+        if(that.isMoveable) {
+            that.checkGround();
 
-        if(that.isOnGround) {
-            // Apply floor friction
-            that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.floorFriction);
+            if (that.isOnGround) {
+                // Apply floor friction
+                that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.floorFriction);
+            }
+            else {
+                // Apply gravity
+                that.movement.y -= PHYSICSNUMBERS.gravity;
+            }
+
+            // Apply air friction
+            that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
+
+            that.applyMovement();
         }
-        else {
-            // Apply gravity
-            that.movement.y -= PHYSICSNUMBERS.gravity;
-        }
-
-        // Apply air friction
-        that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
-
-        that.applyMovement();
     }
 
     // Translate the object with the numbers in the movement vector, taking the time since the last frame into account
@@ -73,17 +85,17 @@ class PhysicsObject extends GameObject {
     }
 
     limitSpeed(vector) {
-        console.log("Slowing down...", this.constructor.name);
+        // console.log("Slowing down...", this.constructor.name);
         return vector.setLength(this.maxMovementPerFrame);
     }
 
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
-        if(this.isOnGround && this.movement.y < 0.01) {
+        if(this.isOnGround /* && this.movement.y < 0.01 */ ) {
             // When close to the ground but not on the ground, set position to on the ground
-            console.log(intersectedObjects[0].point.y, this.distanceToGround, this.constructor.name);
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
+            this.movement.y = 0;
         }
     }
 
