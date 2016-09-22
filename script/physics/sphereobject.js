@@ -5,14 +5,18 @@ class SphereObject extends PhysicsObject {
     }
 
     get maxMovementPerFrame() {
-        return this.mesh.radius;
+        return this.mesh.geometry.boundingSphere.radius;
+    }
+
+    get distanceToGround() {
+        return this.mesh.geometry.boundingSphere.radius;
     }
 
     isCollidingWith(otherObject) {
         if (otherObject instanceof SphereObject) {
             // collision if distance between the center points of both spheres is less than the combined radius
             let distance = this.mesh.position.distanceTo(otherObject.mesh.position);
-            if (distance > this.mesh.radius + otherObject.mesh.radius) return false;
+            if (distance > this.mesh.geometry.boundingSphere.radius + otherObject.mesh.geometry.boundingSphere.radius) return false;
             return this.mesh.position.sub(otherObject.mesh.position).normalize();
         }
         else if (otherObject instanceof CubeObject) {
