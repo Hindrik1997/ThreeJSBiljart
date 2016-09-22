@@ -61,7 +61,6 @@ function initThree() {
     // TESTSPHERE2.mesh.translateY(pt.basePlate.mesh.position.y + pt.basePlate.mesh.geometry.parameters.height / 2 + TESTSPHERE.distanceToGround + 20);
     // TESTSPHERE.movement.x = 0.06;
     GAME.scene.add(TESTSPHERE.mesh);
-    GAME.scene.add(TESTSPHERE2.mesh);
 
 
     // Start the render loop
