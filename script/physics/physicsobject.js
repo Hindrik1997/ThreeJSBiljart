@@ -11,6 +11,11 @@ class PhysicsObject extends GameObject {
     }
 
     get maxMovementPerFrame() {
+        // Radius multiplier
+        return 2;
+    }
+
+    get distanceToGround() {
         return 0;
     }
 
@@ -40,7 +45,22 @@ class PhysicsObject extends GameObject {
         // Check if this object is on the ground;
         that.checkGround();
 
+<<<<<<< HEAD
         that.movement.set(0.01, 0.01, 0.01);
+=======
+        if(that.isOnGround) {
+            // Apply floor friction
+            that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.floorFriction);
+        }
+        else {
+            // Apply gravity
+            that.movement.y -= PHYSICSNUMBERS.gravity;
+        }
+
+        // Apply air friction
+        that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
+
+>>>>>>> 25d9e0265193f1aacbe0d4ea1fdc99127f4a6a4b
         that.applyMovement();
     }
 
@@ -68,7 +88,11 @@ class PhysicsObject extends GameObject {
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
+<<<<<<< HEAD
         if(this.isOnGround) {
+=======
+        if(this.isOnGround && this.movement.y < 0.01) {
+>>>>>>> 25d9e0265193f1aacbe0d4ea1fdc99127f4a6a4b
             // When close to the ground but not on the ground, set position to on the ground
             console.log(intersectedObjects[0].point.y, this.distanceToGround, this.constructor.name);
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;

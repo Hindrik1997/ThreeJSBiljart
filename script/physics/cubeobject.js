@@ -10,7 +10,7 @@ class CubeObject extends PhysicsObject {
 
     get maxMovementPerFrame() {
         let parameters = this.mesh.geometry.parameters;
-        return Math.min(parameters.width, parameters.depth, parameters.height)
+        return super.maxMovementPerFrame * Math.min(parameters.width, parameters.depth, parameters.height)
     }
 
 
