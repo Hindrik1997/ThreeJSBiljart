@@ -19,7 +19,7 @@ class CollisionController {
         for (let i = 0; i < that.collidableObjects.length - 1; ++i) {
             let currentObject = that.collidableObjects[i];
             for (let j = i + 1; j < that.collidableObjects.length; ++j) {
-                // Check if the two object collide
+                // Check if the two object collide\
                 if (currentObject.isCollidingWith(that.collidableObjects[j])) {
                     // Handle the collision from the object that is moving, if one of them isn't moving
                     if(currentObject.isMoving) currentObject.collidedWith(that.collidableObjects[j]);

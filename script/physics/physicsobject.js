@@ -24,7 +24,7 @@ class PhysicsObject extends GameObject {
     }
 
     get isMoving() {
-        return this.movement.length !== 0;
+        return this.movement.length() !== 0;
     }
 
     get geometry() {
@@ -36,13 +36,34 @@ class PhysicsObject extends GameObject {
     }
 
     collidedWith(otherObject) {
-        if(otherObject instanceof SphereObject) {
+        let normal = this.getSurfaceNormal(otherObject),
+            dotProduct = this.movement.dot(normal);
+           // totalLength = this.movement.length() + normal.length();
+            //if(totalLength === 0) return;
+            let inAngle = Math.acos((dotProduct));
+
+        console.log(otherObject);
+        let ah = new THREE.ArrowHelper(normal.normalize(), this.mesh.position, 3, 0xff0000);
+        GAME.scene.add(ah);
+        console.log("normal",normal, "dot", dotProduct, "totalL", 0, "inangle", inAngle);
+        // let newMovement = normal.multiplyScalar(dotProduct).multiplyScalar(-2).add(this.movement);
+        let projected = normal.multiplyScalar(dotProduct),
+            multiplied = projected.multiplyScalar(2),
+            added = multiplied.sub(this.movement);
+        console.log("collision", inAngle * (180 / Math.PI));
+        console.log("current movement", this.movement);
+        console.log("new     movement", added);
+        this.movement = added;
+    }
+
+    getSurfaceNormal(otherObject) {
+        if (otherObject instanceof SphereObject) {
             let posCpy = this.mesh.position.clone();
-            let sphereNormal = posCpy.sub(otherObject.mesh.position).normalize();
-            let dotProduct = this.movement.dot(sphereNormal);
-            let totalLength = this.movement.length() + sphereNormal.length();
-            let inAngle = Math.acos((dotProduct / totalLength));
-            console.log("collision", inAngle);
+            return posCpy.sub(otherObject.mesh.position).normalize();
+        }
+        else if (otherObject instanceof CubeObject) {
+            //TODO: implement
+            return new THREE.Vector3();
         }
     }
 
@@ -50,7 +71,7 @@ class PhysicsObject extends GameObject {
     //noinspection JSMethodCanBeStatic
     updateMovement(that) {
         // Check if this object is on the ground;
-        if(that.isMoveable) {
+        if (that.isMoveable) {
             that.checkGround();
 
             if (that.isOnGround) {
@@ -60,10 +81,10 @@ class PhysicsObject extends GameObject {
             else {
                 // Apply gravity
                 that.movement.y -= PHYSICSNUMBERS.gravity;
+                // Apply air friction
+                that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
             }
 
-            // Apply air friction
-            that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
 
             that.applyMovement();
         }
@@ -93,8 +114,13 @@ class PhysicsObject extends GameObject {
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
+<<<<<<< HEAD
         if(this.isOnGround && this.movement.y < 0.01 ) {
+=======
+        if (this.isOnGround && Math.abs(this.movement.y) < 0.01) {
+>>>>>>> 35073c91b72000d48f0e948f3afac3bf809bb049
             // When close to the ground but not on the ground, set position to on the ground
+            console.log("object close to ground, landing", this.movement);
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
             this.movement.y = 0;
         }

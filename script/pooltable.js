@@ -33,17 +33,26 @@ class PoolTable
             side: THREE.DoubleSide
         });
 
+        this.sideMat = new THREE.MeshPhysicalMaterial({
+            color: "brown",
+            reflectivity : 0.6,
+            metalness : 0.7,
+            roughness : 0.8,
+            side: THREE.DoubleSide
+        });
+
+
         this.standGeom = new THREE.BoxGeometry(width * 0.9, 2.5, height * 0.9);
 
 
         this.lrSide = new THREE.BoxGeometry(width * 0.05, 0.5, height * 1.05);
         this.tdSide = new THREE.BoxGeometry(width * 1.05 - (2 * width*0.05) , 0.5, width * 0.05);
 
-        this.leftSide = new CubeObject(this.lrSide, this.standMat, false);
-        this.rightSide = new CubeObject(this.lrSide, this.standMat, false);
+        this.leftSide = new CubeObject(this.lrSide, this.sideMat, false);
+        this.rightSide = new CubeObject(this.lrSide, this.sideMat, false);
 
-        this.topSide = new CubeObject(this.tdSide, this.standMat, false);
-        this.downSide = new CubeObject(this.tdSide, this.standMat, false);
+        this.topSide = new CubeObject(this.tdSide, this.sideMat, false);
+        this.downSide = new CubeObject(this.tdSide, this.sideMat, false);
 
         this.leftSide.translate(-width/2, 2.63,0);
         this.rightSide.translate(width/2, 2.63, 0);
