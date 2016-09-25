@@ -65,7 +65,7 @@ class PhysicsObject extends GameObject {
         }
         else if (otherObject instanceof CubeObject) {
             //TODO: implement
-            return new THREE.Vector3();
+            
         }
     }
 
