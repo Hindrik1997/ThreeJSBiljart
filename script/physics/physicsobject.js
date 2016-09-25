@@ -37,23 +37,25 @@ class PhysicsObject extends GameObject {
 
     collidedWith(otherObject) {
         let normal = this.getSurfaceNormal(otherObject),
-            dotProduct = this.movement.normalize().dot(normal.normalize());
-           // totalLength = this.movement.length() + normal.length();
-            //if(totalLength === 0) return;
-            let inAngle = Math.acos((dotProduct));
+            totalLength = this.movement.length() + normal.length();
+        if (totalLength === 0) return;
+        // let dotProduct = this.movement.normalize().dot(normal),
+        //     inAngle = Math.acos((dotProduct / totalLength));
 
         console.log(otherObject);
         let ah = new THREE.ArrowHelper(normal.normalize(), this.mesh.position, 3, 0xff0000);
         GAME.scene.add(ah);
-        console.log("normal",normal, "dot", dotProduct, "totalL", 0, "inangle", inAngle);
-        // let newMovement = normal.multiplyScalar(dotProduct).multiplyScalar(-2).add(this.movement);
-        let projected = normal.multiplyScalar(dotProduct),
-            multiplied = projected.multiplyScalar(2),
-            added = multiplied.sub(this.movement);
-        console.log("collision", inAngle * (180 / Math.PI));
+
+        this.movement.normalize();
+        console.log("normal", normal);
         console.log("current movement", this.movement);
-        console.log("new     movement", added);
-        this.movement = added;
+        // let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
+        let outgoingVector = ((d, n) => d.sub(n.multiplyScalar(d.dot(n) * 2))),
+            newMovement = outgoingVector(this.movement.clone(), normal);
+
+
+        console.log("new     movement", newMovement);
+        this.movement = newMovement.setLength(totalLength);
     }
 
     getSurfaceNormal(otherObject) {
@@ -114,14 +116,10 @@ class PhysicsObject extends GameObject {
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
-<<<<<<< HEAD
-        if(this.isOnGround && this.movement.y < 0.01 ) {
-=======
         if (this.isOnGround && Math.abs(this.movement.y) < 0.01) {
->>>>>>> 35073c91b72000d48f0e948f3afac3bf809bb049
             // When close to the ground but not on the ground, set position to on the ground
             console.log("object close to ground, landing", this.movement);
-            this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
+            this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround + 0.0001;
             this.movement.y = 0;
         }
     }
