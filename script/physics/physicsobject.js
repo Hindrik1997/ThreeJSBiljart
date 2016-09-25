@@ -43,20 +43,23 @@ class PhysicsObject extends GameObject {
             let inAngle = Math.acos((dotProduct / totalLength));
 
         console.log(otherObject);
-        let ah = new THREE.ArrowHelper(normal.normalize(), this.mesh.position, 10, 0xff0000);
+        let ah = new THREE.ArrowHelper(normal.normalize(), this.mesh.position, 3, 0xff0000);
         GAME.scene.add(ah);
         console.log("normal",normal, "dot", dotProduct, "totalL", totalLength, "inangle", inAngle);
-        let newMovement = normal.multiplyScalar(dotProduct).multiplyScalar(-2).add(this.movement);
+        // let newMovement = normal.multiplyScalar(dotProduct).multiplyScalar(-2).add(this.movement);
+        let projected = normal.multiplyScalar(dotProduct),
+            multiplied = projected.multiplyScalar(2),
+            added = multiplied.sub(this.movement);
         console.log("collision", inAngle * (180 / Math.PI));
         console.log("current movement", this.movement);
-        console.log("new     movement", newMovement);
-        this.movement = newMovement;
+        console.log("new     movement", added);
+        this.movement = added;
     }
 
     getSurfaceNormal(otherObject) {
         if (otherObject instanceof SphereObject) {
             let posCpy = this.mesh.position.clone();
-            return posCpy.sub(otherObject.mesh.position).normalize().negate();
+            return posCpy.sub(otherObject.mesh.position).normalize();
         }
         else if (otherObject instanceof CubeObject) {
             //TODO: implement
