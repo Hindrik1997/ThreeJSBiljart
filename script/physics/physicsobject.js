@@ -37,15 +37,15 @@ class PhysicsObject extends GameObject {
 
     collidedWith(otherObject) {
         let normal = this.getSurfaceNormal(otherObject),
-            dotProduct = this.movement.dot(normal),
-            totalLength = this.movement.length() + normal.length();
-            if(totalLength === 0) return;
-            let inAngle = Math.acos((dotProduct / totalLength));
+            dotProduct = this.movement.dot(normal);
+           // totalLength = this.movement.length() + normal.length();
+            //if(totalLength === 0) return;
+            let inAngle = Math.acos((dotProduct));
 
         console.log(otherObject);
         let ah = new THREE.ArrowHelper(normal.normalize(), this.mesh.position, 3, 0xff0000);
         GAME.scene.add(ah);
-        console.log("normal",normal, "dot", dotProduct, "totalL", totalLength, "inangle", inAngle);
+        console.log("normal",normal, "dot", dotProduct, "totalL", 0, "inangle", inAngle);
         // let newMovement = normal.multiplyScalar(dotProduct).multiplyScalar(-2).add(this.movement);
         let projected = normal.multiplyScalar(dotProduct),
             multiplied = projected.multiplyScalar(2),
