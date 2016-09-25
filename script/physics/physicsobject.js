@@ -37,7 +37,7 @@ class PhysicsObject extends GameObject {
 
     collidedWith(otherObject) {
         let normal = this.getSurfaceNormal(otherObject),
-            dotProduct = this.movement.dot(normal);
+            dotProduct = this.movement.normalize().dot(normal.normalize());
            // totalLength = this.movement.length() + normal.length();
             //if(totalLength === 0) return;
             let inAngle = Math.acos((dotProduct));
