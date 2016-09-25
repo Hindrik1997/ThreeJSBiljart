@@ -37,7 +37,8 @@ class PhysicsObject extends GameObject {
 
     collidedWith(otherObject) {
         if(otherObject instanceof SphereObject) {
-            let sphereNormal = this.mesh.position.sub(otherObject.mesh.position).normalize();
+            let posCpy = this.mesh.position.clone();
+            let sphereNormal = posCpy.sub(otherObject.mesh.position).normalize();
             let dotProduct = this.movement.dot(sphereNormal);
             let totalLength = this.movement.length() + sphereNormal.length();
             let inAngle = Math.acos((dotProduct / totalLength));
@@ -92,7 +93,7 @@ class PhysicsObject extends GameObject {
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
-        if(this.isOnGround /* && this.movement.y < 0.01 */ ) {
+        if(this.isOnGround && this.movement.y < 0.01 ) {
             // When close to the ground but not on the ground, set position to on the ground
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
             this.movement.y = 0;
