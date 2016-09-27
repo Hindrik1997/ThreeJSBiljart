@@ -26,7 +26,8 @@ class CubeObject extends PhysicsObject {
             return dist < radius;
         }
         else if (otherObject instanceof CubeObject) {
-            return this.boundingBoxHelper.box.intersectsBox(otherObject.boundingBoxHelper.box);
+
+            // return this.boundingBoxHelper.box.intersectsBox(otherObject.boundingBoxHelper.box);
         }
     }
 

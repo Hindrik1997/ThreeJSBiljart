@@ -5,6 +5,7 @@ class PhysicsObject extends GameObject {
         this.movement = new THREE.Vector3(0, 0, 0);
         this.movementThisFrame = 0;
         this.isOnGround = false;
+        this.prevPosition = this.mesh.position;
         this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.01);
         if (this.isMoveable) GAME.registerForUpdates(this.updateMovement, this);
         COLLISIONCONTROLLER.registerObject(this);
@@ -37,24 +38,23 @@ class PhysicsObject extends GameObject {
 
     collidedWith(otherObject) {
         let normal = this.getSurfaceNormal(otherObject),
-            totalLength = this.movement.length() + normal.length();
+            totalLength = this.movement.length() + otherObject.movement.length();
         if (totalLength === 0) return;
         // let dotProduct = this.movement.normalize().dot(normal),
         //     inAngle = Math.acos((dotProduct / totalLength));
 
-        console.log(otherObject);
         let ah = new THREE.ArrowHelper(normal.normalize(), this.mesh.position, 3, 0xff0000);
         GAME.scene.add(ah);
 
         this.movement.normalize();
         console.log("normal", normal);
-        console.log("current movement", this.movement);
+        // console.log("current movement", this.movement);
         // let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
         let outgoingVector = ((d, n) => d.sub(n.multiplyScalar(d.dot(n) * 2))),
             newMovement = outgoingVector(this.movement.clone(), normal);
 
 
-        console.log("new     movement", newMovement);
+        // console.log("new     movement", newMovement);
         this.movement = newMovement.setLength(totalLength);
     }
 
@@ -65,7 +65,41 @@ class PhysicsObject extends GameObject {
         }
         else if (otherObject instanceof CubeObject) {
             //TODO: implement
-            
+            let params = otherObject.mesh.geometry.parameters;
+            console.log("ball       pos", this.prevPosition);
+            console.log("box        pos", otherObject.mesh.position);
+            console.log("params        ", params);
+            let posDiff = Utils.calculatePositionDifference(otherObject.mesh.position, this.mesh.position);
+            // Account for the size of the cube
+            console.log("posdif before ", posDiff);
+            posDiff.x = Utils.reduceByCubeRadius(posDiff.x, params.width / 2);
+            posDiff.y = Utils.reduceByCubeRadius(posDiff.y, params.height / 2);
+            posDiff.z = Utils.reduceByCubeRadius(posDiff.z, params.depth / 2);
+
+            console.log("difference pos", posDiff);
+
+            // Remove all but the largest coordinate from the vector
+            if(Math.abs(posDiff.x) < Math.abs(posDiff.y)) {
+                posDiff.y = 0;
+                if(Math.abs(posDiff.x) < Math.abs(posDiff.z)) {
+                    posDiff.z = 0;
+                }
+                else {
+                    posDiff.x = 0;
+                }
+            }
+            else {
+                posDiff.x = 0;
+                if(Math.abs(posDiff.y) < Math.abs(posDiff.z)) {
+                    posDiff.z = 0;
+                }
+                else {
+                    posDiff.y = 0;
+                }
+            }
+
+            // Finally, normalize the vector and we have the normal vector
+            return posDiff.normalize();
         }
     }
 
@@ -98,6 +132,7 @@ class PhysicsObject extends GameObject {
         // movement needs to be very small numbers
         // check if it doesn't exceed speed limit
 
+        this.prevPosition = this.mesh.position;
         let movementCopy = this.movement.clone();
 
         movementCopy.multiplyScalar(GAME.frameTime);
