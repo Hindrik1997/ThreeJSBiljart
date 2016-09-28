@@ -121,7 +121,11 @@ class PhysicsObject extends GameObject {
                 that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
             }
 
-
+            if(that.movement.length() < 0.001)
+            {
+                that.movement.setLength(0);
+                return;
+            }
             that.applyMovement();
         }
     }
@@ -135,17 +139,22 @@ class PhysicsObject extends GameObject {
         this.prevPosition = this.mesh.position;
         let movementCopy = this.movement.clone();
 
+        console.log("frametime", GAME.frameTime);
         movementCopy.multiplyScalar(GAME.frameTime);
 
-        this.movementThisFrame = (this.movement.length() > this.maxMovementPerFrame) ?
-            this.limitSpeed(movementCopy).length() : movementCopy.length();
+        this.limitSpeed(movementCopy);
+        console.log("after ", movementCopy.length());
 
         this.mesh.position.add(movementCopy);
     }
 
     limitSpeed(vector) {
-        // console.log("Slowing down...", this.constructor.name);
-        return vector.setLength(this.maxMovementPerFrame);
+        console.log(vector.length(), ">", this.maxMovementPerFrame, vector.length() > this.maxMovementPerFrame);
+        if(vector.length() > this.maxMovementPerFrame) {
+
+            vector.setLength(this.maxMovementPerFrame);
+            console.log("slowed it down", this.maxMovementPerFrame);
+        }
     }
 
     checkGround() {
@@ -153,7 +162,6 @@ class PhysicsObject extends GameObject {
         this.isOnGround = intersectedObjects.length !== 0;
         if (this.isOnGround && Math.abs(this.movement.y) < 0.01) {
             // When close to the ground but not on the ground, set position to on the ground
-            console.log("object close to ground, landing", this.movement);
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround + 0.0001;
             this.movement.y = 0;
         }

@@ -60,10 +60,10 @@ function initThree() {
     // TESTSPHERE2 = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "green"}), true);
     // TESTSPHERE2.mesh.translateY(pt.basePlate.mesh.position.y + pt.basePlate.mesh.geometry.parameters.height / 2 + TESTSPHERE.distanceToGround + 20);
     // TESTSPHERE.movement.x = 0.06;
-    TESTSPHERE.movement.x = 0.3;
-    TESTSPHERE.movement.z = 0.1;
-    TESTSPHERE.movement.z = 0.05;
-    TESTSPHERE.mesh.position.y = 3;
+    TESTSPHERE.movement.x = 3;
+    TESTSPHERE.movement.z = 1;
+    TESTSPHERE.movement.z = 0.5;
+    // TESTSPHERE.mesh.position.y = 3;
     GAME.scene.add(TESTSPHERE.mesh);
 
 

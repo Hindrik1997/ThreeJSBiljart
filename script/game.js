@@ -24,7 +24,7 @@ class Game {
 
     //noinspection JSMethodCanBeStatic
     updateFrametime(that) {
-        that.frameTime = that.clock.getElapsedTime();
+        that.frameTime = that.clock.getDelta();
     }
 
     render(that) {
