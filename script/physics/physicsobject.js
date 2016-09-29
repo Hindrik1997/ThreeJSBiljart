@@ -43,15 +43,15 @@ class PhysicsObject extends GameObject {
         // let dotProduct = this.movement.normalize().dot(normal),
         //     inAngle = Math.acos((dotProduct / totalLength));
 
-        let ah = new THREE.ArrowHelper(normal.normalize(), this.mesh.position, 3, 0xff0000);
-        GAME.scene.add(ah);
+        // let ah = new THREE.ArrowHelper(normal, this.mesh.position, 3, 0xffff00);
+        // GAME.scene.add(ah);
+        // console.log("ah", ah);
 
         this.movement.normalize();
-        console.log("normal", normal);
         // console.log("current movement", this.movement);
-        // let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
-        let outgoingVector = ((d, n) => d.sub(n.multiplyScalar(d.dot(n) * 2))),
-            newMovement = outgoingVector(this.movement.clone(), normal);
+        let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
+        // let outgoingVector = ((d, n) => d.sub(n.multiplyScalar(d.dot(n) * 2))),
+        //     newMovement = outgoingVector(this.movement.clone(), normal);
 
 
         // console.log("new     movement", newMovement);
@@ -64,19 +64,12 @@ class PhysicsObject extends GameObject {
             return posCpy.sub(otherObject.mesh.position).normalize();
         }
         else if (otherObject instanceof CubeObject) {
-            //TODO: implement
             let params = otherObject.mesh.geometry.parameters;
-            console.log("ball       pos", this.prevPosition);
-            console.log("box        pos", otherObject.mesh.position);
-            console.log("params        ", params);
             let posDiff = Utils.calculatePositionDifference(otherObject.mesh.position, this.mesh.position);
             // Account for the size of the cube
-            console.log("posdif before ", posDiff);
             posDiff.x = Utils.reduceByCubeRadius(posDiff.x, params.width / 2);
             posDiff.y = Utils.reduceByCubeRadius(posDiff.y, params.height / 2);
             posDiff.z = Utils.reduceByCubeRadius(posDiff.z, params.depth / 2);
-
-            console.log("difference pos", posDiff);
 
             // Remove all but the largest coordinate from the vector
             if(Math.abs(posDiff.x) < Math.abs(posDiff.y)) {
@@ -121,7 +114,11 @@ class PhysicsObject extends GameObject {
                 that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
             }
 
-
+            if(that.movement.length() < 0.001)
+            {
+                that.movement.setLength(0);
+                return;
+            }
             that.applyMovement();
         }
     }
@@ -137,15 +134,18 @@ class PhysicsObject extends GameObject {
 
         movementCopy.multiplyScalar(GAME.frameTime);
 
-        this.movementThisFrame = (this.movement.length() > this.maxMovementPerFrame) ?
-            this.limitSpeed(movementCopy).length() : movementCopy.length();
+        this.limitSpeed(movementCopy);
+
 
         this.mesh.position.add(movementCopy);
     }
 
     limitSpeed(vector) {
-        // console.log("Slowing down...", this.constructor.name);
-        return vector.setLength(this.maxMovementPerFrame);
+        if(vector.length() > this.maxMovementPerFrame) {
+
+            vector.setLength(this.maxMovementPerFrame);
+            console.log("slowed it down", this.maxMovementPerFrame);
+        }
     }
 
     checkGround() {
@@ -153,8 +153,7 @@ class PhysicsObject extends GameObject {
         this.isOnGround = intersectedObjects.length !== 0;
         if (this.isOnGround && Math.abs(this.movement.y) < 0.01) {
             // When close to the ground but not on the ground, set position to on the ground
-            console.log("object close to ground, landing", this.movement);
-            this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround + 0.0001;
+            this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
             this.movement.y = 0;
         }
     }
