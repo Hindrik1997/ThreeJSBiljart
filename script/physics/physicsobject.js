@@ -43,11 +43,13 @@ class PhysicsObject extends GameObject {
             totalLength = this.movement.length() + otherObject.movement.length();
         if (totalLength === 0) return;
 
-        console.log("col", normal);
+        // console.log("col", normal);
         this.normalAH.setDirection(normal);
 
+        let oldMovement = this.movement.clone();
         this.movement.normalize();
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
+
         this.movement = newMovement.setLength(totalLength);
     }
 
@@ -64,28 +66,37 @@ class PhysicsObject extends GameObject {
             posDiff.y = Utils.reduceByCubeRadius(posDiff.y, params.height / 2);
             posDiff.z = Utils.reduceByCubeRadius(posDiff.z, params.depth / 2);
 
+            let unfinishedNormal = posDiff.clone();
+
+
             // Remove all but the largest coordinate from the vector
-            if(Math.abs(posDiff.x) < Math.abs(posDiff.y)) {
-                posDiff.y = 0;
-                if(Math.abs(posDiff.x) < Math.abs(posDiff.z)) {
-                    posDiff.z = 0;
+            if(Math.abs(unfinishedNormal.x) < Math.abs(unfinishedNormal.y)) {
+                unfinishedNormal.y = 0;
+                if(Math.abs(unfinishedNormal.x) < Math.abs(unfinishedNormal.z)) {
+                    unfinishedNormal.z = 0;
                 }
                 else {
-                    posDiff.x = 0;
+                    unfinishedNormal.x = 0;
                 }
             }
             else {
-                posDiff.x = 0;
-                if(Math.abs(posDiff.y) < Math.abs(posDiff.z)) {
-                    posDiff.z = 0;
+                unfinishedNormal.x = 0;
+                if(Math.abs(unfinishedNormal.y) < Math.abs(unfinishedNormal.z)) {
+                    unfinishedNormal.z = 0;
                 }
                 else {
-                    posDiff.y = 0;
+                    unfinishedNormal.y = 0;
                 }
             }
 
             // Finally, normalize the vector and we have the normal vector
-            return posDiff.normalize();
+            let normal = unfinishedNormal.normalize();
+
+            // Move the object out of the cubes bounding box
+            posDiff.subScalar(this.mesh.geometry.boundingSphere.radius).multiply(normal);
+            this.mesh.position.add(posDiff);
+
+            return normal;
         }
     }
 
