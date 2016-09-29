@@ -5,7 +5,7 @@ class PhysicsObject extends GameObject {
         this.movement = new THREE.Vector3(0, 0, 0);
         this.movementThisFrame = 0;
         this.isOnGround = false;
-        this.nextPosition = this.mesh.position;
+        this.prevPosition = this.mesh.position;
         this.normalAH = new THREE.ArrowHelper(new THREE.Vector3(0,1,0), new THREE.Vector3(0, 4, 0), 1, 0xffff00);
         GAME.scene.add(this.normalAH);
         this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.02);
@@ -46,21 +46,22 @@ class PhysicsObject extends GameObject {
         // console.log("col", normal);
         this.normalAH.setDirection(normal);
 
-        let oldMovement = this.movement.clone();
         this.movement.normalize();
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
 
         this.movement = newMovement.setLength(totalLength);
+        console.log(this.mesh.position == this.prevPosition);
+        this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
     }
 
     getSurfaceNormal(otherObject) {
         if (otherObject instanceof SphereObject) {
-            let posCpy = this.nextPosition.clone();
+            let posCpy = this.mesh.position.clone();
             return posCpy.sub(otherObject.mesh.position).normalize();
         }
         else if (otherObject instanceof CubeObject) {
             let params = otherObject.mesh.geometry.parameters;
-            let posDiff = Utils.calculatePositionDifference(otherObject.mesh.position, this.nextPosition);
+            let posDiff = Utils.calculatePositionDifference(otherObject.mesh.position, this.mesh.position);
             // Account for the size of the cube
             posDiff.x = Utils.reduceByCubeRadius(posDiff.x, params.width / 2);
             posDiff.y = Utils.reduceByCubeRadius(posDiff.y, params.height / 2);
@@ -93,8 +94,8 @@ class PhysicsObject extends GameObject {
             let normal = unfinishedNormal.normalize();
 
             // Move the object out of the cubes bounding box
-            posDiff.subScalar(this.mesh.geometry.boundingSphere.radius).multiply(normal);
-            this.mesh.position.add(posDiff);
+            // posDiff.subScalar(this.mesh.geometry.boundingSphere.radius).multiply(normal);
+            // this.mesh.position.add(posDiff);
 
             return normal;
         }
@@ -133,7 +134,8 @@ class PhysicsObject extends GameObject {
         // movement needs to be very small numbers
         // check if it doesn't exceed speed limit
 
-        this.mesh.position.set(this.nextPosition.x, this.nextPosition.y, this.nextPosition.z);
+        this.prevPosition = this.mesh.position.clone();
+
         let movementCopy = this.movement.clone();
 
         movementCopy.multiplyScalar(GAME.frameTime);
@@ -141,7 +143,7 @@ class PhysicsObject extends GameObject {
         this.limitSpeed(movementCopy);
 
 
-        this.nextPosition.add(movementCopy);
+        this.mesh.position.add(movementCopy);
     }
 
     limitSpeed(vector) {

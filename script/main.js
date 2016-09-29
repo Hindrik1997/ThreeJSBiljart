@@ -62,6 +62,7 @@ function initThree() {
     // TESTSPHERE.movement.x = 0.06;
     TESTSPHERE.movement.x = (Math.random() * 4) - 2;
     TESTSPHERE.movement.z = (Math.random() * 4) - 2;
+    TESTSPHERE.movement.setLength(8);
     // TESTSPHERE.mesh.position.y = 3;
     GAME.scene.add(TESTSPHERE.mesh);
 
