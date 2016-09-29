@@ -43,11 +43,15 @@ class PhysicsObject extends GameObject {
         // let dotProduct = this.movement.normalize().dot(normal),
         //     inAngle = Math.acos((dotProduct / totalLength));
 
+        // let ah = new THREE.ArrowHelper(normal, this.mesh.position, 3, 0xffff00);
+        // GAME.scene.add(ah);
+        // console.log("ah", ah);
+
         this.movement.normalize();
         // console.log("current movement", this.movement);
-        // let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
-        let outgoingVector = ((d, n) => d.sub(n.multiplyScalar(d.dot(n) * 2))),
-            newMovement = outgoingVector(this.movement.clone(), normal);
+        let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
+        // let outgoingVector = ((d, n) => d.sub(n.multiplyScalar(d.dot(n) * 2))),
+        //     newMovement = outgoingVector(this.movement.clone(), normal);
 
 
         // console.log("new     movement", newMovement);
@@ -60,7 +64,6 @@ class PhysicsObject extends GameObject {
             return posCpy.sub(otherObject.mesh.position).normalize();
         }
         else if (otherObject instanceof CubeObject) {
-            //TODO: implement
             let params = otherObject.mesh.geometry.parameters;
             let posDiff = Utils.calculatePositionDifference(otherObject.mesh.position, this.mesh.position);
             // Account for the size of the cube
@@ -126,10 +129,8 @@ class PhysicsObject extends GameObject {
         // movement needs to be very small numbers
         // check if it doesn't exceed speed limit
 
-        console.log("distance moved", Utils.calculatePositionDifference(this.prevPosition, this.mesh.position).length());
         this.prevPosition = this.mesh.position;
         let movementCopy = this.movement.clone();
-        console.log("speed", movementCopy.length());
 
         movementCopy.multiplyScalar(GAME.frameTime);
 
