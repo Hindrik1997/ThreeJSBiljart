@@ -45,8 +45,8 @@ class PoolTable
         this.standGeom = new THREE.BoxGeometry(width * 0.9, 2.5, height * 0.9);
 
 
-        this.lrSide = new THREE.BoxGeometry(width * 0.05, 0.5, height * 1.05);
-        this.tdSide = new THREE.BoxGeometry(width * 1.05 - (2 * width*0.05) , 0.5, width * 0.05);
+        this.lrSide = new THREE.BoxGeometry(width * 0.05, 0.5, height * 0.925);
+        this.tdSide = new THREE.BoxGeometry(width * 1.05 - (2 * width*0.10) , 0.5, width * 0.05);
 
         this.leftSide = new CubeObject(this.lrSide, this.sideMat, false);
         this.rightSide = new CubeObject(this.lrSide, this.sideMat, false);
