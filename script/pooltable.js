@@ -44,6 +44,9 @@ class PoolTable
 
         this.standGeom = new THREE.BoxGeometry(width * 0.9, 2.5, height * 0.9);
 
+        this.lrSideBORDER = new THREE.BoxGeometry(width * 0.025, 0.5, height * 1.05);
+        this.tdSideBORDER = new THREE.BoxGeometry(width * 1.2 - (2 * width * 0.05) , 0.5, width * 0.025);
+
         this.tdSide = new THREE.BoxGeometry(width * 0.985 - (2 * width * 0.105) / 2 , 0.5, width * 0.05);
 
         this.lrSideDown = new THREE.BoxGeometry(width * 0.05, 0.5, height * 0.89 / 2);
@@ -55,6 +58,11 @@ class PoolTable
         this.SideDR = new CubeObject(this.lrSideDown, this.sideMat, false);
         this.SideTR = new CubeObject(this.lrSideTop, this.sideMat, false);
 
+        this.BORDERR = new CubeObject(this.lrSideBORDER, this.sideMat, false);
+        this.BORDERL = new CubeObject(this.lrSideBORDER, this.sideMat, false);
+
+        this.BORDERT = new CubeObject(this.tdSideBORDER, this.sideMat, false);
+        this.BORDERD = new CubeObject(this.tdSideBORDER, this.sideMat, false)
 
         this.topSide = new CubeObject(this.tdSide, this.sideMat, false);
         this.downSide = new CubeObject(this.tdSide, this.sideMat, false);
@@ -65,15 +73,26 @@ class PoolTable
         this.SideDL.translate(-width/2, 2.63, height / 4 - 0.05);
         this.SideTL.translate(-width/2, 2.63, - height / 4 + 0.05);
 
+        this.BORDERR.translate(-width/2 - 0.1875, 2.63, 0);
+        this.BORDERL.translate(width/2 + 0.1875, 2.63, 0);
+
+        this.BORDERD.translate(0, 2.63, - height / 2 - 0.2625);
+        this.BORDERT.translate(0, 2.63,   height / 2 + 0.2625);
+
         this.topSide.translate(0, 2.63, -height/ 2 - 0.075);
         this.downSide.translate(0, 2.63, height / 2 + 0.075);
 
+        GAME.scene.add(this.BORDERR.mesh);
+        GAME.scene.add(this.BORDERL.mesh);
+
+        GAME.scene.add(this.BORDERD.mesh);
+        GAME.scene.add(this.BORDERT.mesh);
 
         GAME.scene.add(this.SideDR.mesh);
         GAME.scene.add(this.SideDL.mesh);
 
         GAME.scene.add(this.SideTR.mesh);
-        GAME.scene.add(this.SideTL.mesh)
+        GAME.scene.add(this.SideTL.mesh);
 
         GAME.scene.add(this.topSide.mesh);
         GAME.scene.add(this.downSide.mesh);
