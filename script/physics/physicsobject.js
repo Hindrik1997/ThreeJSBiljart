@@ -5,8 +5,10 @@ class PhysicsObject extends GameObject {
         this.movement = new THREE.Vector3(0, 0, 0);
         this.movementThisFrame = 0;
         this.isOnGround = false;
-        this.prevPosition = this.mesh.position;
-        this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.01);
+        this.nextPosition = this.mesh.position;
+        this.normalAH = new THREE.ArrowHelper(new THREE.Vector3(0,1,0), new THREE.Vector3(0, 4, 0), 1, 0xffff00);
+        GAME.scene.add(this.normalAH);
+        this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.02);
         if (this.isMoveable) GAME.registerForUpdates(this.updateMovement, this);
         COLLISIONCONTROLLER.registerObject(this);
     }
@@ -37,35 +39,26 @@ class PhysicsObject extends GameObject {
     }
 
     collidedWith(otherObject) {
-        let normal = this.getSurfaceNormal(otherObject),
+        let normal = this.getSurfaceNormal(otherObject).negate(),
             totalLength = this.movement.length() + otherObject.movement.length();
         if (totalLength === 0) return;
-        // let dotProduct = this.movement.normalize().dot(normal),
-        //     inAngle = Math.acos((dotProduct / totalLength));
 
-        // let ah = new THREE.ArrowHelper(normal, this.mesh.position, 3, 0xffff00);
-        // GAME.scene.add(ah);
-        // console.log("ah", ah);
+        console.log("col", normal);
+        this.normalAH.setDirection(normal);
 
         this.movement.normalize();
-        // console.log("current movement", this.movement);
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
-        // let outgoingVector = ((d, n) => d.sub(n.multiplyScalar(d.dot(n) * 2))),
-        //     newMovement = outgoingVector(this.movement.clone(), normal);
-
-
-        // console.log("new     movement", newMovement);
         this.movement = newMovement.setLength(totalLength);
     }
 
     getSurfaceNormal(otherObject) {
         if (otherObject instanceof SphereObject) {
-            let posCpy = this.mesh.position.clone();
+            let posCpy = this.nextPosition.clone();
             return posCpy.sub(otherObject.mesh.position).normalize();
         }
         else if (otherObject instanceof CubeObject) {
             let params = otherObject.mesh.geometry.parameters;
-            let posDiff = Utils.calculatePositionDifference(otherObject.mesh.position, this.mesh.position);
+            let posDiff = Utils.calculatePositionDifference(otherObject.mesh.position, this.nextPosition);
             // Account for the size of the cube
             posDiff.x = Utils.reduceByCubeRadius(posDiff.x, params.width / 2);
             posDiff.y = Utils.reduceByCubeRadius(posDiff.y, params.height / 2);
@@ -129,7 +122,7 @@ class PhysicsObject extends GameObject {
         // movement needs to be very small numbers
         // check if it doesn't exceed speed limit
 
-        this.prevPosition = this.mesh.position;
+        this.mesh.position.set(this.nextPosition.x, this.nextPosition.y, this.nextPosition.z);
         let movementCopy = this.movement.clone();
 
         movementCopy.multiplyScalar(GAME.frameTime);
@@ -137,7 +130,7 @@ class PhysicsObject extends GameObject {
         this.limitSpeed(movementCopy);
 
 
-        this.mesh.position.add(movementCopy);
+        this.nextPosition.add(movementCopy);
     }
 
     limitSpeed(vector) {
