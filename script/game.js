@@ -28,6 +28,7 @@ class Game {
     }
 
     render(that) {
+        COLLISIONCONTROLLER.checkCollisions();
         that.updateList.forEach(function (element) {
             element.function(element.that);
         });
