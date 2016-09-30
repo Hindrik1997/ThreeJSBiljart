@@ -6,11 +6,9 @@ class PhysicsObject extends GameObject {
         this.movementThisFrame = 0;
         this.isOnGround = false;
         this.prevPosition = this.mesh.position;
-        this.normalAH = new THREE.ArrowHelper(new THREE.Vector3(0,1,0), new THREE.Vector3(0, 4, 0), 1, 0xffff00);
-        GAME.scene.add(this.normalAH);
         this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.02);
         if (this.isMoveable) GAME.registerForUpdates(this.updateMovement, this);
-        COLLISIONCONTROLLER.registerObject(this);
+        GAME.collisionController.registerObject(this);
     }
 
     get maxMovementPerFrame() {

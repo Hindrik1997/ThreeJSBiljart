@@ -13,9 +13,10 @@ class Cue extends CubeObject {
 
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
-        that.group.position.set(TESTSPHERE.mesh.position.x, TESTSPHERE.mesh.position.y, TESTSPHERE.mesh.position.z);
+        that.group.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
         that.mesh.position.setY(that.mesh.geometry.parameters.height / 2 + 0.2);
-        that.group.rotation.set(CONTROLS.object.rotation.x, CONTROLS.object.rotation.y, CONTROLS.object.rotation.z);
+
+        that.group.rotation.set(GAME.orbitControls.object.rotation.x, GAME.orbitControls.object.rotation.y, GAME.orbitControls.object.rotation.z);
         //that.mesh.lookAt(TESTSPHERE.mesh.position);
         // that.mesh.translateZ(1);
         //that.mesh.translateY(1);

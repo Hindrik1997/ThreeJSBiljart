@@ -1,7 +1,8 @@
 class SphereObject extends PhysicsObject {
     constructor(geometry, material, isMovable) {
         let mesh = new THREE.Mesh(geometry, material);
-        super(mesh, isMovable);
+        super(mesh, isMovable);this.normalAH = new THREE.ArrowHelper(new THREE.Vector3(0,1,0), new THREE.Vector3(0, 4, 0), 1, 0xffff00);
+        GAME.scene.add(this.normalAH);
     }
 
     get maxMovementPerFrame() {
