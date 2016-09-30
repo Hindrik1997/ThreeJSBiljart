@@ -50,7 +50,6 @@ class PhysicsObject extends GameObject {
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
 
         this.movement = newMovement.setLength(totalLength);
-        console.log(this.mesh.position == this.prevPosition);
         this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
     }
 

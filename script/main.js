@@ -1,4 +1,4 @@
-let GAME, COLLISIONCONTROLLER, PHYSICSNUMBERS, TESTSPHERE, POOLTABLE, CONTROLS, SKYBOX;
+let GAME, COLLISIONCONTROLLER, PHYSICSNUMBERS, TESTSPHERE, POOLTABLE, CONTROLS, SKYBOX, CUE;
 
 $(document).ready(function () {
     initThree();
@@ -12,11 +12,10 @@ function initThree() {
         resizeWindow(GAME);
     });
 
-    //SKYBOX = new SkyBox(GAME, "posx.jpg", "negx.jpg", "posy.jpg", "negy.jpg", "posz.jpg","negz.jpg");
     SKYBOX = new SkyBox("Positive X.jpg", "Negative X.jpg", "Positive Y.jpg", "Negative Y.jpg", "Positive Z.jpg", "Negative Z.jpg");
 
-    let axes = new THREE.AxisHelper(10);
-    GAME.scene.add(axes);
+    // let axes = new THREE.AxisHelper(10);
+    // GAME.scene.add(axes);
 
     GAME.render(GAME);
 
@@ -52,19 +51,15 @@ function initThree() {
     GAME.scene.add(grassObj);
     POOLTABLE = new PoolTable(5,8);
 
-    // Create box and ball for collision testing
-    // TESTCUBE = new CubeObject(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: "green"}), true);
-    // TESTCUBE.mesh.translateY(10);4
     TESTSPHERE = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "pink"}), true);
     TESTSPHERE.mesh.translateY(POOLTABLE.basePlate.mesh.position.y + POOLTABLE.basePlate.mesh.geometry.parameters.height / 2 + TESTSPHERE.distanceToGround);
-    // TESTSPHERE2 = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "green"}), true);
-    // TESTSPHERE2.mesh.translateY(pt.basePlate.mesh.position.y + pt.basePlate.mesh.geometry.parameters.height / 2 + TESTSPHERE.distanceToGround + 20);
-    // TESTSPHERE.movement.x = 0.06;
     TESTSPHERE.movement.x = (Math.random() * 4) - 2;
     TESTSPHERE.movement.z = (Math.random() * 4) - 2;
     TESTSPHERE.movement.setLength(8);
-    // TESTSPHERE.mesh.position.y = 3;
     GAME.scene.add(TESTSPHERE.mesh);
+
+    CUE = new Cue();
+    GAME.scene.add(CUE.group);
 
 
     // Start the render loop

@@ -5,7 +5,7 @@ class CubeObject extends PhysicsObject {
         this.boundingBoxHelper = new THREE.BoundingBoxHelper(mesh, 0x00ff00);
         this.boundingBoxHelper.update();
         if (isMovable) GAME.registerForUpdates(this.updateBoundingBox, this);
-        GAME.scene.add(this.boundingBoxHelper);
+        // GAME.scene.add(this.boundingBoxHelper);
     }
 
     get maxMovementPerFrame() {
