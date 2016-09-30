@@ -9,6 +9,7 @@ class Cue extends CubeObject {
         this.group = new THREE.Group();
         this.group.add(this.mesh);
         GAME.registerForUpdates(this.updatePosition, this);
+        this.mesh.rotateX(90);
 
         this.tweenPlaying = false;
 
@@ -31,10 +32,9 @@ class Cue extends CubeObject {
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
         that.group.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
+        that.group.lookAt(GAME.whiteBall.mesh.position);
 
         if(!that.tweenPlaying) that.mesh.position.setY(that.mesh.geometry.parameters.height / 2 + 0.2);
-
-        that.group.rotation.set(GAME.orbitControls.object.rotation.x, GAME.orbitControls.object.rotation.y, GAME.orbitControls.object.rotation.z);
         //that.mesh.lookAt(TESTSPHERE.mesh.position);
         // that.mesh.translateZ(1);
         //that.mesh.translateY(1);

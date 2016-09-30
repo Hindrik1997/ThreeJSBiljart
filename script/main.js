@@ -1,4 +1,4 @@
-let GAME, PHYSICSNUMBERS, TESTSPHERE, CUE;
+let GAME, PHYSICSNUMBERS;
 
 $(document).ready(function () {
     initThree();
