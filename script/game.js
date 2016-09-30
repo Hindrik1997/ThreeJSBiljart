@@ -37,6 +37,7 @@ class Game {
 
     render(that) {
         this.collisionController.checkCollisions();
+        TWEEN.update();
         that.updateList.forEach(function (element) {
             element.function(element.that);
         });
@@ -70,8 +71,8 @@ class Game {
 
         this.addBalls();
 
-        this.Cue = new Cue();
-        GAME.scene.add(this.Cue.group);
+        this.cue = new Cue();
+        GAME.scene.add(this.cue.group);
     }
 
     //noinspection JSMethodCanBeStatic
