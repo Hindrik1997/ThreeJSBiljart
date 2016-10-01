@@ -5,43 +5,22 @@ class Cue extends CubeObject {
     constructor() {
         let geometry = new THREE.CylinderGeometry(0.05, 0.05, 10);
         let material = new THREE.MeshPhongMaterial({color: "brown"});
-        super(geometry, material, true);
-        this.group = new THREE.Group();
-        this.group.add(this.mesh);
+        super(geometry, material, false);
+        //this.group = new THREE.Group();
+
+        this.pivotPoint = new THREE.Object3D();
+        this.mesh.rotateX(Math.PI / 2);
+        this.mesh.position.set(0,0,0);
+        this.mesh.position.setZ(-5.2);
+        this.pivotPoint.add(this.mesh);
+        GAME.scene.add(this.pivotPoint);
+        this.pivotPoint.rotateX(Math.PI / 8);
+
         GAME.registerForUpdates(this.updatePosition, this);
-        this.mesh.rotateX(90);
-
-        this.tweenPlaying = false;
-
-        this.start = {y: this.mesh.geometry.parameters.height / 2 + 0.2};
-        this.end = {y: 0};
-        this.forwardTween = new TWEEN.Tween(this.start).to(this.end, 1000);
-        let that = this;
-        this.forwardTween.onUpdate(function() { that.mesh.position.setY(that.start.y) });
-        this.forwardTween.onComplete(function() {
-            GAME.whiteBall.movement.set(1,0,1);
-            that.backwardTween.start();
-        });
-        this.backwardTween = new TWEEN.Tween(this.end).to(this.start, 5000);
-        this.backwardTween.onUpdate(function() { that.mesh.position.setY(that.end.y) });
-        this.backwardTween.onComplete(function() {
-            that.tweenPlaying = false;
-        })
     }
 
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
-        that.group.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
-        that.group.lookAt(GAME.whiteBall.mesh.position);
-
-        if(!that.tweenPlaying) that.mesh.position.setY(that.mesh.geometry.parameters.height / 2 + 0.2);
-        //that.mesh.lookAt(TESTSPHERE.mesh.position);
-        // that.mesh.translateZ(1);
-        //that.mesh.translateY(1);
-    }
-
-    play() {
-        this.tweenPlaying = true;
-        this.forwardTween.start();
+        that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
     }
 }
