@@ -51,7 +51,7 @@ class Cue extends GameObject {
     }
 
     play() {
-        if (!GAME.whiteBall.isMoving) {
+        if (GAME.areAllBallsStationary()) {
             this.forwardTween.start();
         }
     }

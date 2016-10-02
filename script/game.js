@@ -55,7 +55,7 @@ class Game {
 
     areAllBallsStationary() {
         for(let i = 0; i < this.balls.length; ++i) {
-            if(!this.balls[i].isMoving) return false;
+            if(this.balls[i].isMoving) return false;
         }
         return true;
     }
