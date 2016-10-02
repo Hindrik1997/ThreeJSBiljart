@@ -149,7 +149,7 @@ class PhysicsObject extends GameObject {
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
-        if (this.isOnGround && Math.abs(this.movement.y) < 0.3) {
+        if (this.isOnGround && Math.abs(this.movement.y) < 0.5) {
             // When close to the ground but not on the ground, set position to on the ground
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
             this.movement.y = 0;
