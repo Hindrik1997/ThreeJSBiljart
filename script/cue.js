@@ -23,7 +23,7 @@ class Cue extends GameObject {
             .onUpdate(function () {
                 that.mesh.position.setZ(this.z);
             })
-            .onComplete(function() {
+            .onComplete(function () {
                 console.log("*poke*");
                 let direction = GAME.whiteBall.mesh.position.clone().sub(that.mesh.position);
                 console.log(direction);
@@ -33,8 +33,8 @@ class Cue extends GameObject {
         this.backwardTween = new TWEEN.Tween(currentPos).to({z: defaultZ}, 1000)
             .easing(TWEEN.Easing.Linear.None)
             .onUpdate(function () {
-            that.mesh.position.setZ(this.z);
-        });
+                that.mesh.position.setZ(this.z);
+            });
 
         this.forwardTween.chain(this.backwardTween);
 
@@ -47,10 +47,12 @@ class Cue extends GameObject {
 
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
-        if(!GAME.whiteBall.isMoving) that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
+        if (!GAME.whiteBall.isMoving) that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
     }
 
     play() {
-        this.forwardTween.start();
+        if (!GAME.whiteBall.isMoving) {
+            this.forwardTween.start();
+        }
     }
 }
