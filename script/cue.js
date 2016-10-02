@@ -10,7 +10,7 @@ class Cue extends CubeObject {
 
         this.pivotPoint = new THREE.Object3D();
         this.mesh.rotateX(Math.PI / 2);
-        this.mesh.position.set(0,0,0);
+        this.mesh.position.set(0, 0, 0);
         this.mesh.position.setZ(-5.2);
         this.pivotPoint.add(this.mesh);
         GAME.scene.add(this.pivotPoint);
