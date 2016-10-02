@@ -1,6 +1,6 @@
 class SphereObject extends PhysicsObject {
-    constructor(geometry, material, isMoveable) {
-        super(geometry, material);
+    constructor(geometry, material, isMovable) {
+        super(geometry, material, isMovable);
         this.normalAH = new THREE.ArrowHelper(new THREE.Vector3(0,1,0), new THREE.Vector3(0, 4, 0), 1, 0xffff00);
         GAME.scene.add(this.normalAH);
     }

@@ -11,7 +11,7 @@ class PoolTable
         let aM = tcl.load("imgs/carpet.jpg");
 
         aM.wrapS = aM.wrapT = THREE.RepeatWrapping;
-        aM.repeat.set(width / 2, height / 2);
+        aM.repeat.set(width / 4, height / 4);
 
         let basePlateGeom = new THREE.BoxGeometry(width, 0.2 ,height);
         let basePlateMat = new THREE.MeshPhysicalMaterial({
@@ -102,6 +102,8 @@ class PoolTable
 
         this.basePlate.translate(0, 2.5, 0);
         this.basePlate.mesh.position.y = 2.5;
+
+        this.plateY = this.basePlate.mesh.position.y + this.basePlate.mesh.geometry.parameters.height / 2;
 
         this.group.add(this.basePlate.mesh);
         this.group.add(this.stand);

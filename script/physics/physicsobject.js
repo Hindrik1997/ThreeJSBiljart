@@ -28,14 +28,6 @@ class PhysicsObject extends GameObject {
         return this.movement.length() !== 0;
     }
 
-    get geometry() {
-        return this._geometry;
-    }
-
-    set geometry(value) {
-        this._geometry = value;
-    }
-
     collidedWith(otherObject) {
         let normal = this.getSurfaceNormal(otherObject).negate(),
             totalLength = this.movement.length() + otherObject.movement.length();
@@ -47,7 +39,7 @@ class PhysicsObject extends GameObject {
         this.movement.normalize();
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
 
-        if(otherObject.isMoveable)
+        if(otherObject.isMovable)
         {
             this.movement = newMovement.setLength(totalLength / 2);
             otherObject.movement = normal.negate().setLength(totalLength / 2)
@@ -56,6 +48,7 @@ class PhysicsObject extends GameObject {
         {
             this.movement = newMovement.setLength(totalLength);
         }
+        
         this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
     }
 
@@ -96,13 +89,7 @@ class PhysicsObject extends GameObject {
             }
 
             // Finally, normalize the vector and we have the normal vector
-            let normal = unfinishedNormal.normalize();
-
-            // Move the object out of the cubes bounding box
-            // posDiff.subScalar(this.mesh.geometry.boundingSphere.radius).multiply(normal);
-            // this.mesh.position.add(posDiff);
-
-            return normal;
+            return unfinishedNormal.normalize();
         }
     }
 
@@ -110,7 +97,7 @@ class PhysicsObject extends GameObject {
     //noinspection JSMethodCanBeStatic
     updateMovement(that) {
         // Check if this object is on the ground;
-        if (that.isMoveable) {
+        if (that.isMovable) {
             that.checkGround();
 
             if (that.isOnGround) {
@@ -121,7 +108,7 @@ class PhysicsObject extends GameObject {
                 // Apply gravity
                 that.movement.y -= PHYSICSNUMBERS.gravity;
                 // Apply air friction
-                that.movement.setLength(that.movement.length() * PHYSICSNUMBERS.airFriction);
+                that.movement.setY(that.movement.y * PHYSICSNUMBERS.airFriction);
             }
 
             if(that.movement.length() < 0.001)
@@ -162,7 +149,7 @@ class PhysicsObject extends GameObject {
     checkGround() {
         let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
-        if (this.isOnGround && Math.abs(this.movement.y) < 0.01) {
+        if (this.isOnGround && Math.abs(this.movement.y) < 0.3) {
             // When close to the ground but not on the ground, set position to on the ground
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
             this.movement.y = 0;
@@ -170,7 +157,7 @@ class PhysicsObject extends GameObject {
     }
 
     dispose() {
-        COLLISIONCONTROLLER.deregisterObject(this);
+        GAME.collisionController.deregisterObject(this);
         super.dispose();
     }
 }

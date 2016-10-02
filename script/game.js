@@ -55,7 +55,7 @@ class Game {
 
     areAllBallsStationary() {
         for(let i = 0; i < this.balls.length; ++i) {
-            if(this.balls[i].movement.length() !== 0) return false;
+            if(!this.balls[i].isMoving) return false;
         }
         return true;
     }
@@ -102,13 +102,16 @@ class Game {
     }
 
     addBalls() {
-        this.whiteBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhongMaterial({color: "white"}), true);
-        this.whiteBall.mesh.translateY(this.poolTable.basePlate.mesh.position.y + this.poolTable.basePlate.mesh.geometry.parameters.height / 2 + this.whiteBall.distanceToGround);
-        this.whiteBall.movement.x = (Math.random() * 4) - 2;
-        this.whiteBall.movement.z = (Math.random() * 4) - 2;
-        this.whiteBall.movement.setLength(8);
+        this.balls = [];
+        this.whiteBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({color: "white", metalness: 0.05}), true);
+        this.whiteBall.mesh.translateY(this.poolTable.plateY + this.whiteBall.distanceToGround);
         this.scene.add(this.whiteBall.mesh);
+        this.balls.push(this.whiteBall);
 
-        this.balls = [ this.whiteBall ];
+        let otherBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({color: "black", metalness: 0.05}), true);
+        otherBall.mesh.translateY(this.poolTable.plateY + otherBall.distanceToGround);
+        otherBall.mesh.translateZ(2);
+        this.scene.add(otherBall.mesh);
+        this.balls.push(otherBall);
     }
 }

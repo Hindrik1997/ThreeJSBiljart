@@ -3,7 +3,7 @@
  */
 class Cue extends GameObject {
     constructor() {
-        let geometry = new THREE.CylinderGeometry(0.05, 0.05, 10);
+        let geometry = new THREE.CylinderGeometry(0.05, 0.05, 5);
         let material = new THREE.MeshPhongMaterial({color: "brown"});
         super(geometry, material);
 
@@ -11,7 +11,34 @@ class Cue extends GameObject {
         this.mesh.rotateX(Math.PI / 2);
         this.mesh.position.set(0, 0, 0);
         console.log(this);
-        this.mesh.position.setZ(-(this.mesh.geometry.parameters.height / 2 + GAME.whiteBall.mesh.geometry.parameters.radius * 2));
+
+        const touchingBallZ = -this.mesh.geometry.parameters.height / 2;
+        const defaultZ = touchingBallZ - 0.5;
+
+        let currentPos = {z: defaultZ};
+
+        let that = this;
+        this.forwardTween = new TWEEN.Tween(currentPos).to({z: touchingBallZ}, 500)
+            .easing(TWEEN.Easing.Exponential.In)
+            .onUpdate(function () {
+                that.mesh.position.setZ(this.z);
+            })
+            .onComplete(function() {
+                console.log("*poke*");
+                let direction = GAME.whiteBall.mesh.position.clone().sub(that.mesh.position);
+                console.log(direction);
+                GAME.whiteBall.movement = direction.setLength(8);
+            });
+
+        this.backwardTween = new TWEEN.Tween(currentPos).to({z: defaultZ}, 1000)
+            .easing(TWEEN.Easing.Linear.None)
+            .onUpdate(function () {
+            that.mesh.position.setZ(this.z);
+        });
+
+        this.forwardTween.chain(this.backwardTween);
+
+        this.mesh.position.setZ(defaultZ);
         this.pivotPoint.add(this.mesh);
         this.pivotPoint.rotateX(Math.PI / 8);
 
@@ -21,5 +48,9 @@ class Cue extends GameObject {
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
         that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
+    }
+
+    play() {
+        this.forwardTween.start();
     }
 }
