@@ -1,6 +1,6 @@
 class GameObject {
-    constructor(mesh, geometry, material) {
-        this.mesh = mesh;
+    constructor(geometry, material) {
+        this.mesh = new THREE.Mesh(geometry, material);
     }
 
     dispose() {

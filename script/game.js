@@ -79,7 +79,7 @@ class Game {
         this.addBalls();
 
         this.cue = new Cue();
-        //GAME.scene.add(this.cue.group);
+        GAME.scene.add(this.cue.pivotPoint);
     }
 
     //noinspection JSMethodCanBeStatic

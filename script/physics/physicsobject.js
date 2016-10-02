@@ -1,13 +1,13 @@
 class PhysicsObject extends GameObject {
-    constructor(mesh, isMovable) {
-        super(mesh);
+    constructor(geometry, material, isMovable) {
+        super(geometry, material);
         this._isMovable = isMovable;
         this.movement = new THREE.Vector3(0, 0, 0);
         this.movementThisFrame = 0;
         this.isOnGround = false;
         this.prevPosition = this.mesh.position;
         this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.02);
-        if (this.isMoveable) GAME.registerForUpdates(this.updateMovement, this);
+        if (this.isMovable) GAME.registerForUpdates(this.updateMovement, this);
         GAME.collisionController.registerObject(this);
     }
 
@@ -20,7 +20,7 @@ class PhysicsObject extends GameObject {
         return 0;
     }
 
-    get isMoveable() {
+    get isMovable() {
         return this._isMovable;
     }
 
