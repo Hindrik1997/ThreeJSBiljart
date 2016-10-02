@@ -47,7 +47,15 @@ class PhysicsObject extends GameObject {
         this.movement.normalize();
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
 
-        this.movement = newMovement.setLength(totalLength);
+        if(otherObject.isMoveable)
+        {
+            this.movement = newMovement.setLength(totalLength / 2);
+            otherObject.movement = normal.negate().setLength(totalLength / 2)
+        }
+        else
+        {
+            this.movement = newMovement.setLength(totalLength);
+        }
         this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
     }
 

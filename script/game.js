@@ -53,6 +53,13 @@ class Game {
         this.updateList.push({function: func, that: that});
     }
 
+    areAllBallsStationary() {
+        for(let i = 0; i < this.balls.length; ++i) {
+            if(this.balls[i].movement.length() !== 0) return false;
+        }
+        return true;
+    }
+
     createObjects() {
         this.poolTable = new PoolTable(5,8);
         this.scene.add(this.poolTable.group);
@@ -101,5 +108,7 @@ class Game {
         this.whiteBall.movement.z = (Math.random() * 4) - 2;
         this.whiteBall.movement.setLength(8);
         this.scene.add(this.whiteBall.mesh);
+
+        this.balls = [ this.whiteBall ];
     }
 }
