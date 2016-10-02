@@ -37,9 +37,17 @@ class Cue extends GameObject {
 
         this.forwardTween.chain(this.backwardTween);
 
+        GAME.cuecam = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.mesh.add(GAME.cuecam);
+        GAME.useCueCam = false;
+        GAME.cuecam.rotateX(Math.PI / 2);
+        GAME.cuecam.rotateZ(Math.PI);
+        GAME.cuecam.position.setZ(-1);
+
         this.mesh.position.setZ(defaultZ);
         this.pivotPoint.add(this.mesh);
         this.pivotPoint.rotateX(Math.PI / 8);
+
 
         GAME.registerForUpdates(this.updatePosition, this);
     }
