@@ -111,7 +111,7 @@ class PhysicsObject extends GameObject {
                 that.movement.setY(that.movement.y * PHYSICSNUMBERS.airFriction);
             }
 
-            if(that.movement.length() < 0.001)
+            if(that.movement.length() < 0.1)
             {
                 that.movement.setLength(0);
                 return;
