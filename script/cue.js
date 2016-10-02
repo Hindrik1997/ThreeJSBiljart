@@ -24,7 +24,6 @@ class Cue extends GameObject {
                 that.mesh.position.setZ(this.z);
             })
             .onComplete(function () {
-                console.log("*poke*");
                 let direction = GAME.whiteBall.mesh.position.clone().sub(that.mesh.position);
                 console.log(direction);
                 GAME.whiteBall.movement = direction.setLength(8);
