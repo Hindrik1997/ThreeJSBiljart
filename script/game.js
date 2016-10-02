@@ -102,7 +102,7 @@ class Game {
     }
 
     addBalls() {
-        this.whiteBall = new SphereObject(new THREE.SphereGeometry(0.1, 10, 10), new THREE.MeshPhongMaterial({color: "white"}), true);
+        this.whiteBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhongMaterial({color: "white"}), true);
         this.whiteBall.mesh.translateY(this.poolTable.basePlate.mesh.position.y + this.poolTable.basePlate.mesh.geometry.parameters.height / 2 + this.whiteBall.distanceToGround);
         this.whiteBall.movement.x = (Math.random() * 4) - 2;
         this.whiteBall.movement.z = (Math.random() * 4) - 2;
