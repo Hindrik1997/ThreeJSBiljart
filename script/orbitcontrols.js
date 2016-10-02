@@ -227,6 +227,9 @@ THREE.OrbitControls = function ( object, domElement, localElement ) {
 
     this.update = function () {
 
+        if(GAME.useCueCam)
+            return;
+
         var position = this.object.position;
         var offset = position.clone().sub( this.target );
 

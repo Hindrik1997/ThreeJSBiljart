@@ -45,7 +45,10 @@ class Game {
         requestAnimationFrame(function () {
             that.render(that)
         });
-        that.renderer.render(that.scene, that.camera);
+        if(that.useCueCam)
+            that.renderer.render(that.scene, that.cuecam);
+        else
+            that.renderer.render(that.scene, that.camera);
     }
 
     // Registers a function and the object it belongs to, this makes it run every frame
