@@ -47,7 +47,7 @@ class Cue extends GameObject {
 
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
-        that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
+        if(!GAME.whiteBall.isMoving) that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
     }
 
     play() {

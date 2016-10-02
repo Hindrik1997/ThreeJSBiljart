@@ -42,20 +42,20 @@ class PhysicsObject extends GameObject {
         if(otherObject.isMovable)
         {
             this.movement = newMovement.setLength(totalLength / 2);
-            otherObject.movement = normal.negate().setLength(totalLength / 2)
+            otherObject.movement = normal.setLength(totalLength / 2)
         }
         else
         {
             this.movement = newMovement.setLength(totalLength);
         }
-        
+
         this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
     }
 
     getSurfaceNormal(otherObject) {
         if (otherObject instanceof SphereObject) {
             let posCpy = this.mesh.position.clone();
-            return posCpy.sub(otherObject.mesh.position).normalize();
+            return posCpy.sub(otherObject.mesh.position).normalize().negate();
         }
         else if (otherObject instanceof CubeObject) {
             let params = otherObject.mesh.geometry.parameters;

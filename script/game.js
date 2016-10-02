@@ -111,6 +111,7 @@ class Game {
         let otherBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({color: "black", metalness: 0.05}), true);
         otherBall.mesh.translateY(this.poolTable.plateY + otherBall.distanceToGround);
         otherBall.mesh.translateZ(2);
+        otherBall.mesh.translateX(0.05);
         this.scene.add(otherBall.mesh);
         this.balls.push(otherBall);
     }
