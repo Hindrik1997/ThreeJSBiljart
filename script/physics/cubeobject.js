@@ -1,6 +1,6 @@
 class CubeObject extends PhysicsObject {
     constructor(geometry, material, isMovable) {
-        super(geometry, material);
+        super(geometry, material, isMovable);
         this.boundingBoxHelper = new THREE.BoundingBoxHelper(this.mesh, 0x00ff00);
         this.boundingBoxHelper.update();
         if (isMovable) GAME.registerForUpdates(this.updateBoundingBox, this);

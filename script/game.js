@@ -18,7 +18,7 @@ class Game {
         this.collisionController = new CollisionController();
 
         this.orbitControls = new THREE.OrbitControls(this.camera, document, this.renderer.domElement);
-        this.registerForUpdates(function(controls){
+        this.registerForUpdates(function (controls) {
             controls.update();
         }, this.orbitControls);
 
@@ -45,10 +45,8 @@ class Game {
         requestAnimationFrame(function () {
             that.render(that)
         });
-        if(that.useCueCam)
-            that.renderer.render(that.scene, that.cuecam);
-        else
-            that.renderer.render(that.scene, that.camera);
+        if (that.useCueCam) that.renderer.render(that.scene, that.cuecam);
+        else that.renderer.render(that.scene, that.camera);
     }
 
     // Registers a function and the object it belongs to, this makes it run every frame
@@ -57,14 +55,14 @@ class Game {
     }
 
     areAllBallsStationary() {
-        for(let i = 0; i < this.balls.length; ++i) {
-            if(this.balls[i].isMoving) return false;
+        for (let i = 0; i < this.balls.length; ++i) {
+            if (this.balls[i].isMoving) return false;
         }
         return true;
     }
 
     createObjects() {
-        this.poolTable = new PoolTable(5,8);
+        this.poolTable = new PoolTable(5, 8);
         this.scene.add(this.poolTable.group);
 
         this.skyBox = new SkyBox("Positive X.jpg", "Negative X.jpg", "Positive Y.jpg", "Negative Y.jpg", "Positive Z.jpg", "Negative Z.jpg");
@@ -79,6 +77,8 @@ class Game {
         this.grass = this.createGrass();
         GAME.scene.add(this.grass);
 
+        this.addPockets();
+
         this.addBalls();
 
         this.cue = new Cue();
@@ -91,27 +91,41 @@ class Game {
 
         let grassTex = tcl.load("imgs/grass.jpg");
 
-        grassTex.wrapT = grassTex.wrapS =  THREE.RepeatWrapping;
-        grassTex.repeat.set(50,50);
+        grassTex.wrapT = grassTex.wrapS = THREE.RepeatWrapping;
+        grassTex.repeat.set(50, 50);
 
-        let planeGeom = new THREE.PlaneGeometry(1000,1000);
+        let planeGeom = new THREE.PlaneGeometry(1000, 1000);
         planeGeom.rotateX(-Math.PI / 2);
         let planeMat = new THREE.MeshPhysicalMaterial({
-            reflectivity : 0,
-            roughness : 0.70,
-            map : grassTex
+            reflectivity: 0,
+            roughness: 0.70,
+            map: grassTex
         });
         return new THREE.Mesh(planeGeom, planeMat);
     }
 
+    addPockets() {
+        this.pockets = [];
+
+        let pocket = new Pocket(0.5, 0.5, 2.6,0);
+        this.scene.add(pocket.mesh);
+        this.pockets.push(pocket);
+    }
+
     addBalls() {
         this.balls = [];
-        this.whiteBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({color: "white", metalness: 0.05}), true);
+        this.whiteBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
+            color: "white",
+            metalness: 0.05
+        }), true);
         this.whiteBall.mesh.translateY(this.poolTable.plateY + this.whiteBall.distanceToGround);
         this.scene.add(this.whiteBall.mesh);
         this.balls.push(this.whiteBall);
 
-        let otherBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({color: "black", metalness: 0.05}), true);
+        let otherBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
+            color: "black",
+            metalness: 0.05
+        }), true);
         otherBall.mesh.translateY(this.poolTable.plateY + otherBall.distanceToGround);
         otherBall.mesh.translateZ(2);
         otherBall.mesh.translateX(0.05);
