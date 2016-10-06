@@ -24,7 +24,8 @@ class Cue extends GameObject {
                 that.mesh.position.setZ(this.z);
             })
             .onComplete(function () {
-                let direction = GAME.whiteBall.mesh.position.clone().sub(that.mesh.position);
+                //TODO: FIX THIS!
+                let direction = GAME.whiteBall.mesh.position.clone().sub(GAME.cue.pivotPoint.rotation);
                 console.log(direction);
                 GAME.whiteBall.movement = direction.setLength(8);
             });
@@ -48,6 +49,33 @@ class Cue extends GameObject {
         this.pivotPoint.add(this.mesh);
         this.pivotPoint.rotateX(Math.PI / 8);
 
+
+        window.addEventListener( 'keydown', function(data){
+
+            if(!GAME.useCueCam)
+                return;
+
+            switch(data.keyCode)
+            {
+                case 37://left
+
+                    let quatrot = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), -0.15);
+                    GAME.cue.pivotPoint.quaternion.premultiply(quatrot);
+
+                    break;
+                case 39:
+
+                    let quatrot2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), 0.15);
+                    GAME.cue.pivotPoint.quaternion.premultiply(quatrot2);
+
+                    break;
+
+                case 32:
+                    GAME.cue.play();
+                    break;
+            }
+
+        }, false );
 
         GAME.registerForUpdates(this.updatePosition, this);
     }
