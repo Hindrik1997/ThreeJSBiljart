@@ -60,7 +60,7 @@ class PoolTable
         let borderL = new CubeObject(lrSideBORDER, sideMat, false);
 
         let borderT = new CubeObject(tdSideBORDER, sideMat, false);
-        let borderD = new CubeObject(tdSideBORDER, sideMat, false)
+        let borderD = new CubeObject(tdSideBORDER, sideMat, false);
 
         let topSide = new CubeObject(tdSide, sideMat, false);
         let downSide = new CubeObject(tdSide, sideMat, false);

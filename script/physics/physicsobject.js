@@ -5,6 +5,7 @@ class PhysicsObject extends GameObject {
         this.movement = new THREE.Vector3(0, 0, 0);
         this.movementThisFrame = 0;
         this.isOnGround = false;
+        this.isInPocket = false;
         this.prevPosition = this.mesh.position;
         this.raycaster = new THREE.Raycaster(this.mesh.position, new THREE.Vector3(0, -1, 0), 0, this.distanceToGround + 0.02);
         if (this.isMovable) GAME.registerForUpdates(this.updateMovement, this);
@@ -29,11 +30,17 @@ class PhysicsObject extends GameObject {
     }
 
     collidedWith(otherObject) {
+        if(this.isInPocket && otherObject === GAME.poolTable.basePlate) {
+            // fall through the base plate while in the pocket
+            this.isInPocket = false;
+            this.movement.x = 0;
+            this.movement.z = 0;
+            return;
+        }
+
         let normal = this.getSurfaceNormal(otherObject).negate(),
             totalLength = this.movement.length() + otherObject.movement.length();
         if (totalLength === 0) return;
-
-        // console.log("col", normal);
         this.normalAH.setDirection(normal);
 
         this.movement.normalize();
@@ -147,9 +154,10 @@ class PhysicsObject extends GameObject {
     }
 
     checkGround() {
-        let intersectedObjects = this.raycaster.intersectObjects(GAME.scene.children, true);
+        let intersectedObjects = this.raycaster.intersectObjects(GAME.poolTable.group.children, true);
         this.isOnGround = intersectedObjects.length !== 0;
         if (this.isOnGround && Math.abs(this.movement.y) < 0.5) {
+
             // When close to the ground but not on the ground, set position to on the ground
             this.mesh.position.y = intersectedObjects[0].point.y + this.distanceToGround;
             this.movement.y = 0;

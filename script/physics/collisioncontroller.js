@@ -21,7 +21,8 @@ class CollisionController {
                 // Check if the two object collide\
                 if (currentObject.isCollidingWith(this.collidableObjects[j])) {
                     // Handle the collision from the object that is moving, if one of them isn't moving
-                    if(currentObject.isMoving) currentObject.collidedWith(this.collidableObjects[j]);
+                    // Also make sure to handle collisions with the pocket from the pocket
+                    if(currentObject.isMoving || this.collidableObjects[j] instanceof Pocket) currentObject.collidedWith(this.collidableObjects[j]);
                     else this.collidableObjects[j].collidedWith(currentObject);
                 }
             }
