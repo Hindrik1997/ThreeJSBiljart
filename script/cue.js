@@ -25,7 +25,17 @@ class Cue extends GameObject {
             })
             .onComplete(function () {
                 //TODO: FIX THIS!
-                let direction = GAME.whiteBall.mesh.position.clone().sub(GAME.cue.pivotPoint.rotation);
+                //let direction = GAME.whiteBall.mesh.position.clone().sub(GAME.cue.pivotPoint.position);
+
+                GAME.scene.updateMatrixWorld();
+                let wpball = new THREE.Vector3();
+                wpball.setFromMatrixPosition(GAME.whiteBall.mesh.matrixWorld);
+
+                let wcp = new THREE.Vector3();
+                wcp.setFromMatrixPosition(GAME.cue.mesh.matrixWorld);
+
+                let direction =  wpball.clone().sub(wcp.clone());
+
                 console.log(direction);
                 GAME.whiteBall.movement = direction.setLength(8);
             });
