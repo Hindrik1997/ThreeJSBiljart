@@ -34,7 +34,7 @@ class Cue extends GameObject {
                 let wcp = new THREE.Vector3();
                 wcp.setFromMatrixPosition(GAME.cue.mesh.matrixWorld);
 
-                let direction =  wpball.clone().sub(wcp.clone());
+                let direction = wpball.clone().sub(wcp.clone());
 
                 console.log(direction);
                 GAME.whiteBall.movement = direction.setLength(8);
@@ -60,32 +60,25 @@ class Cue extends GameObject {
         this.pivotPoint.rotateX(Math.PI / 8);
 
 
-        window.addEventListener( 'keydown', function(data){
-
-            if(!GAME.useCueCam)
-                return;
-
-            switch(data.keyCode)
-            {
-                case 37://left
-
-                    let quatrot = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), -0.15);
-                    GAME.cue.pivotPoint.quaternion.premultiply(quatrot);
-
-                    break;
-                case 39:
-
-                    let quatrot2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), 0.15);
-                    GAME.cue.pivotPoint.quaternion.premultiply(quatrot2);
-
+        window.addEventListener('keydown', function (data) {
+            let rotationQuaternion;
+            switch (data.keyCode) {
+                case 37: // Left
+                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -0.15);
+                    GAME.cue.pivotPoint.quaternion.premultiply(rotationQuaternion);
                     break;
 
-                case 32:
+                case 39: // Right
+                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.15);
+                    GAME.cue.pivotPoint.quaternion.premultiply(rotationQuaternion);
+                    break;
+
+                case 32: // Space
                     GAME.cue.play();
                     break;
             }
 
-        }, false );
+        }, false);
 
         GAME.registerForUpdates(this.updatePosition, this);
     }

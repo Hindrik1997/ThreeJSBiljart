@@ -9,23 +9,26 @@ function initThree() {
     GAME.createObjects();
     PHYSICSNUMBERS = new PhysicsNumbers();
     $(window).resize(function () {
-        resizeWindow(GAME);
+        resizeWindow();
     });
 
     // Start the render loop
-    GAME.render(GAME);
+    GAME.render();
 }
 
 function getRandomColor() {
     return Math.floor(Math.random() * 0xffffff);
 }
 
-function resizeWindow(gameObject) {
+function resizeWindow() {
     let body = $("body");
     let h = body.height();
     let w = body.width();
 
-    gameObject.renderer.setSize(w, h);
-    gameObject.camera.aspect = (w / h);
-    gameObject.camera.updateProjectionMatrix();
+    GAME.renderer.setSize(w, h);
+    GAME.camera.aspect = (w / h);
+    GAME.camera.updateProjectionMatrix();
+
+    GAME.cuecam.aspect = (w / h);
+    GAME.cuecam.updateProjectionMatrix();
 }

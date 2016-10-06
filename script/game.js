@@ -35,18 +35,18 @@ class Game {
         that.frameTime = that.clock.getDelta();
     }
 
-    render(that) {
+    render() {
         this.collisionController.checkCollisions();
         TWEEN.update();
-        that.updateList.forEach(function (element) {
+        GAME.updateList.forEach(function (element) {
             element.function(element.that);
         });
 
         requestAnimationFrame(function () {
-            that.render(that)
+            GAME.render()
         });
-        if (that.useCueCam) that.renderer.render(that.scene, that.cuecam);
-        else that.renderer.render(that.scene, that.camera);
+        if (GAME.useCueCam) GAME.renderer.render(GAME.scene, GAME.cuecam);
+        else GAME.renderer.render(GAME.scene, GAME.camera);
     }
 
     // Registers a function and the object it belongs to, this makes it run every frame
