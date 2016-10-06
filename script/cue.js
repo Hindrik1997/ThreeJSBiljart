@@ -24,17 +24,14 @@ class Cue extends GameObject {
                 that.mesh.position.setZ(this.z);
             })
             .onComplete(function () {
-                //TODO: FIX THIS!
-                //let direction = GAME.whiteBall.mesh.position.clone().sub(GAME.cue.pivotPoint.position);
-
                 GAME.scene.updateMatrixWorld();
-                let wpball = new THREE.Vector3();
-                wpball.setFromMatrixPosition(GAME.whiteBall.mesh.matrixWorld);
+                let ballWorldPos = new THREE.Vector3();
+                ballWorldPos.setFromMatrixPosition(GAME.whiteBall.mesh.matrixWorld);
 
-                let wcp = new THREE.Vector3();
-                wcp.setFromMatrixPosition(GAME.cue.mesh.matrixWorld);
+                let cueWorldPos = new THREE.Vector3();
+                cueWorldPos.setFromMatrixPosition(GAME.cue.mesh.matrixWorld);
 
-                let direction = wpball.clone().sub(wcp.clone());
+                let direction = ballWorldPos.clone().sub(cueWorldPos.clone());
 
                 console.log(direction);
                 GAME.whiteBall.movement = direction.setLength(8);
@@ -85,7 +82,9 @@ class Cue extends GameObject {
 
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
-        if (!GAME.whiteBall.isMoving) that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
+        if (!GAME.whiteBall.isMoving && !GAME.whiteBall.isInPocket) {
+            that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
+        }
     }
 
     play() {

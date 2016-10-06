@@ -107,8 +107,9 @@ class Game {
     addPockets() {
         this.pockets = [];
 
-        let pocket = new Pocket(0.5, 0.5, 2.6,0);
+        let pocket = new Pocket(2.5,0);
         this.scene.add(pocket.mesh);
+        this.scene.add(pocket.blackHoleMesh);
         this.pockets.push(pocket);
     }
 

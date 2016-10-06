@@ -4,6 +4,7 @@ class GameObject {
     }
 
     dispose() {
-        this.mesh.dispose();
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
     }
 }

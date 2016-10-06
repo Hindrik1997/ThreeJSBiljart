@@ -25,19 +25,15 @@ class PhysicsObject extends GameObject {
         return this._isMovable;
     }
 
+    set isMovable(value) {
+        this._isMovable = value;
+    }
+
     get isMoving() {
         return this.movement.length() !== 0;
     }
 
     collidedWith(otherObject) {
-        if(this.isInPocket && otherObject === GAME.poolTable.basePlate) {
-            // fall through the base plate while in the pocket
-            this.isInPocket = false;
-            this.movement.x = 0;
-            this.movement.z = 0;
-            return;
-        }
-
         let normal = this.getSurfaceNormal(otherObject).negate(),
             totalLength = this.movement.length() + otherObject.movement.length();
         if (totalLength === 0) return;
