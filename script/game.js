@@ -27,6 +27,13 @@ class Game {
         this.frameTime = 0;
         this.registerForUpdates(this.updateFrametime, this);
 
+        window.addEventListener('keydown', function (data) {
+            if(data.keyCode == 70)
+            {
+                    let m = GAME.useCueCam;
+                    GAME.useCueCam = !m;
+            }
+        }, false);
 
     }
 
@@ -107,30 +114,82 @@ class Game {
     addPockets() {
         this.pockets = [];
 
-        let pocket = new Pocket(2.5,0);
-        this.scene.add(pocket.mesh);
-        this.scene.add(pocket.blackHoleMesh);
-        this.pockets.push(pocket);
+        let pocketLeftMiddle = new Pocket(2.5,0);
+        let pocketRightMiddle = new Pocket(-2.5,0);
+
+        let pocketLeftBottom = new Pocket(2.5,-4);
+        let pocketRightBottom = new Pocket(-2.5,-4);
+
+        let pocketLeftTop = new Pocket(2.5,4);
+        let pocketRightTop = new Pocket(-2.5,4);
+
+
+
+        this.scene.add(pocketLeftMiddle.mesh);
+        this.scene.add(pocketLeftMiddle.blackHoleMesh);
+        this.pockets.push(pocketLeftMiddle);
+
+        this.scene.add(pocketRightMiddle.mesh);
+        this.scene.add(pocketRightMiddle.blackHoleMesh);
+        this.pockets.push(pocketRightMiddle);
+
+        this.scene.add(pocketRightBottom.mesh);
+        this.scene.add(pocketRightBottom.blackHoleMesh);
+        this.pockets.push(pocketRightBottom);
+
+        this.scene.add(pocketRightTop.mesh);
+        this.scene.add(pocketRightTop.blackHoleMesh);
+        this.pockets.push(pocketRightTop);
+
+        this.scene.add(pocketLeftBottom.mesh);
+        this.scene.add(pocketLeftBottom.blackHoleMesh);
+        this.pockets.push(pocketLeftBottom);
+
+        this.scene.add(pocketLeftTop.mesh);
+        this.scene.add(pocketLeftTop.blackHoleMesh);
+        this.pockets.push(pocketLeftTop);
     }
 
     addBalls() {
         this.balls = [];
-        this.whiteBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
+
+        this.whiteBall = new BallObject(0, new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
             color: "white",
             metalness: 0.05
         }), true);
+
+        for(let i = 1; i < 16; ++i)
+        {
+            if(i == 8)
+                continue;
+
+            let ball = new BallObject(i, new THREE.SphereGeometry(0.1, 30  , 30), new THREE.MeshPhysicalMaterial({
+                color: Math.random() * 0xffffff,
+                metalness: 0.05
+            }), true);
+
+            ball.mesh.translateY(this.poolTable.plateY + ball.distanceToGround);
+            ball.mesh.translateZ(Math.random() * 2.5);
+            ball.mesh.translateZ(Math.random() * -5);
+            ball.mesh.translateX(Math.random() * -3);
+
+            this.scene.add(ball.mesh);
+            this.scene.add(ball);
+            this.balls.push(ball);
+        }
+
         this.whiteBall.mesh.translateY(this.poolTable.plateY + this.whiteBall.distanceToGround);
         this.scene.add(this.whiteBall.mesh);
         this.balls.push(this.whiteBall);
 
-        let otherBall = new SphereObject(new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
+        let blackBall = new BallObject(8, new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
             color: "black",
             metalness: 0.05
         }), true);
-        otherBall.mesh.translateY(this.poolTable.plateY + otherBall.distanceToGround);
-        otherBall.mesh.translateZ(2);
-        otherBall.mesh.translateX(0.05);
-        this.scene.add(otherBall.mesh);
-        this.balls.push(otherBall);
+        blackBall.mesh.translateY(this.poolTable.plateY + blackBall.distanceToGround);
+        blackBall.mesh.translateZ(2);
+        blackBall.mesh.translateX(0.05);
+        this.scene.add(blackBall.mesh);
+        this.balls.push(blackBall);
     }
 }

@@ -67,7 +67,7 @@ THREE.OrbitControls = function ( object, domElement, localElement ) {
     this.maxPolarAngle = Math.PI / 2 - 0.1; // radians              ##LIMIT TO UPPER HALF!
 
     // Set to true to disable use of the keys
-    this.noKeys = false;
+    this.noKeys = true;
 
     //wasd + space and shift
     this.keys = { LEFT: 65, UP: 32, RIGHT: 68, BOTTOM: 16 , FORWARD: 87, BACKWARD: 83};

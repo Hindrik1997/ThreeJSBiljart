@@ -39,6 +39,9 @@ class Pocket extends CubeObject {
             })
             .onComplete(function() {
                 otherObject.mesh.material.visible = false;
+
+
+
             });
 
         console.log("going down");

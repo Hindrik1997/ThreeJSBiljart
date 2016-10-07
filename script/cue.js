@@ -54,19 +54,19 @@ class Cue extends GameObject {
 
         this.mesh.position.setZ(defaultZ);
         this.pivotPoint.add(this.mesh);
-        this.pivotPoint.rotateX(Math.PI / 8);
+        this.pivotPoint.rotateX(Math.PI / 64);
 
 
         window.addEventListener('keydown', function (data) {
             let rotationQuaternion;
             switch (data.keyCode) {
                 case 37: // Left
-                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -0.15);
+                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -0.01);
                     GAME.cue.pivotPoint.quaternion.premultiply(rotationQuaternion);
                     break;
 
                 case 39: // Right
-                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.15);
+                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.01);
                     GAME.cue.pivotPoint.quaternion.premultiply(rotationQuaternion);
                     break;
 
