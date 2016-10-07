@@ -24,7 +24,7 @@ class CollisionController {
                     // Handle the collision from the object that is moving, if one of them isn't moving
                     // Also make sure to handle collisions with the pocket from the pocket
                     console.log(currentObject.constructor.name, this.collidableObjects[j].constructor.name);
-                    if ((currentObject.isMoving && !this.collidableObjects[j] instanceof Pocket) || currentObject instanceof Pocket) {
+                    if ((currentObject.isMoving && !(this.collidableObjects[j] instanceof Pocket)) || currentObject instanceof Pocket) {
                         console.log("currentobj");
                         currentObject.collidedWith(this.collidableObjects[j]);
                     }
