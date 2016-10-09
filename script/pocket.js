@@ -30,13 +30,14 @@ class Pocket extends CubeObject {
             .to({x: this.mesh.position.x, y: this.mesh.position.y - 2, z: this.mesh.position.z}, 500)
             .easing(TWEEN.Easing.Linear.None)
             .onUpdate(function () {
+                console.log("stopped");
                 otherObject.mesh.position.setX(this.x);
                 otherObject.mesh.position.setY(this.y);
                 otherObject.mesh.position.setZ(this.z);
             })
             .onComplete(function() {
                 otherObject.mesh.material.visible = false;
-
+                console.log("stillmoving", otherObject.movement.length() != 0);
 
 
             });
