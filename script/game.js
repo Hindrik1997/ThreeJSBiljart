@@ -150,6 +150,8 @@ class Game {
         this.pockets.push(pocketLeftTop);
     }
 
+
+
     addBalls() {
         this.balls = [];
 
@@ -163,24 +165,75 @@ class Game {
             if(i == 8)
                 continue;
 
+            let color;
+            if(i < 8)
+                color = "red";
+            else
+                color = "blue";
+
             let ball = new BallObject(i, new THREE.SphereGeometry(0.1, 30  , 30), new THREE.MeshPhysicalMaterial({
-                color: Math.random() * 0xffffff,
+                color: color,
                 metalness: 0.05
             }), true);
 
             ball.mesh.translateY(this.poolTable.plateY + ball.distanceToGround);
-            ball.mesh.translateZ(Math.random() * 2.5);
-            ball.mesh.translateZ(Math.random() * -5);
-            ball.mesh.translateX(Math.random() * -3);
-
+            ball.mesh.translateZ(2);
             this.scene.add(ball.mesh);
-            this.scene.add(ball);
             this.balls.push(ball);
         }
 
-        this.whiteBall.mesh.translateY(this.poolTable.plateY + this.whiteBall.distanceToGround);
-        this.scene.add(this.whiteBall.mesh);
-        this.balls.push(this.whiteBall);
+        let rad = this.balls[0].mesh.geometry.parameters.radius;
+
+        shuffle(this.balls);
+
+
+
+        this.balls[0].mesh.translateZ(0);
+        this.balls[0].mesh.translateX(0);
+
+
+        this.balls[1].mesh.translateZ(rad * 2);
+        this.balls[1].mesh.translateX(- rad);
+
+        this.balls[2].mesh.translateZ(rad * 2);
+        this.balls[2].mesh.translateX(rad);
+
+        this.balls[3].mesh.translateZ(rad * 4);
+        this.balls[3].mesh.translateX(rad * 2);
+
+        this.balls[4].mesh.translateZ(rad * 4);
+        this.balls[4].mesh.translateX(-rad * 2);
+
+        this.balls[5].mesh.translateZ(rad * 6);
+        this.balls[5].mesh.translateX(-rad);
+
+        this.balls[6].mesh.translateZ(rad * 6);
+        this.balls[6].mesh.translateX(rad);
+
+        this.balls[7].mesh.translateZ(rad * 6);
+        this.balls[7].mesh.translateX(rad * 3);
+
+        this.balls[8].mesh.translateZ(rad * 6);
+        this.balls[8].mesh.translateX(- rad * 3);
+
+        this.balls[9].mesh.translateZ(rad * 8);
+        this.balls[9].mesh.translateX(- rad * 2);
+
+        this.balls[10].mesh.translateZ(rad * 8);
+        this.balls[10].mesh.translateX(rad * 2);
+
+        this.balls[11].mesh.translateZ(rad * 8);
+        this.balls[11].mesh.translateX(- rad * 4);
+
+        this.balls[12].mesh.translateZ(rad * 8);
+        this.balls[12].mesh.translateX(rad * 4);
+
+        this.balls[13].mesh.translateZ(rad * 8);
+
+
+
+
+
 
         let blackBall = new BallObject(8, new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
             color: "black",
@@ -188,8 +241,33 @@ class Game {
         }), true);
         blackBall.mesh.translateY(this.poolTable.plateY + blackBall.distanceToGround);
         blackBall.mesh.translateZ(2);
-        blackBall.mesh.translateX(0.05);
+        blackBall.mesh.translateZ(rad * 4);
         this.scene.add(blackBall.mesh);
         this.balls.push(blackBall);
+
+        this.whiteBall.mesh.translateY(this.poolTable.plateY + this.whiteBall.distanceToGround);
+        this.scene.add(this.whiteBall.mesh);
+        this.balls.push(this.whiteBall);
+
+
     }
+}
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }

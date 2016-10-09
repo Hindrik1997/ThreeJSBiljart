@@ -4,8 +4,6 @@
       <w>antialias</w>
       <w>collisioncontroller</w>
       <w>cubeobject</w>
-      <w>frametime</w>
-      <w>physicsnumbers</w>
       <w>skybox</w>
       <w>sphereobject</w>
     </words>
