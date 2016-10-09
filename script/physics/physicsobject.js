@@ -42,6 +42,11 @@ class PhysicsObject extends GameObject {
         this.movement.normalize();
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
 
+        let powerMultiplier;
+        if(this instanceof SphereObject && otherObject instanceof SphereObject) {
+            totalLength *= 1.7;
+        }
+
         if(otherObject.isMovable)
         {
             this.movement = newMovement.setLength(totalLength / 2);
