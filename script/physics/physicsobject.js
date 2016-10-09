@@ -42,18 +42,17 @@ class PhysicsObject extends GameObject {
         this.movement.normalize();
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));
 
-        let powerMultiplier;
-        if(this instanceof SphereObject && otherObject instanceof SphereObject) {
-            totalLength *= 1.7;
-        }
-
-        if(otherObject.isMovable)
-        {
+        if (otherObject.isMovable) {
             this.movement = newMovement.setLength(totalLength / 2);
-            otherObject.movement = normal.setLength(totalLength / 2)
+            if (otherObject.isMoving) {
+                otherObject.movement = normal.setLength(totalLength / 2);
+
+            }
+            else {
+                otherObject.movement = normal.setLength(totalLength);
+            }
         }
-        else
-        {
+        else {
             this.movement = newMovement.setLength(totalLength);
         }
 
@@ -77,9 +76,9 @@ class PhysicsObject extends GameObject {
 
 
             // Remove all but the largest coordinate from the vector
-            if(Math.abs(unfinishedNormal.x) < Math.abs(unfinishedNormal.y)) {
+            if (Math.abs(unfinishedNormal.x) < Math.abs(unfinishedNormal.y)) {
                 unfinishedNormal.y = 0;
-                if(Math.abs(unfinishedNormal.x) < Math.abs(unfinishedNormal.z)) {
+                if (Math.abs(unfinishedNormal.x) < Math.abs(unfinishedNormal.z)) {
                     unfinishedNormal.z = 0;
                 }
                 else {
@@ -88,7 +87,7 @@ class PhysicsObject extends GameObject {
             }
             else {
                 unfinishedNormal.x = 0;
-                if(Math.abs(unfinishedNormal.y) < Math.abs(unfinishedNormal.z)) {
+                if (Math.abs(unfinishedNormal.y) < Math.abs(unfinishedNormal.z)) {
                     unfinishedNormal.z = 0;
                 }
                 else {
@@ -104,8 +103,8 @@ class PhysicsObject extends GameObject {
     // Apply the friction and gravity to the movement vector
     //noinspection JSMethodCanBeStatic
     updateMovement(that) {
-        // Check if this object is on the ground;
         if (that.isMovable) {
+            // Check if this object is on the ground;
             that.checkGround();
 
             if (that.isOnGround) {
@@ -119,8 +118,7 @@ class PhysicsObject extends GameObject {
                 that.movement.setY(that.movement.y * PHYSICSNUMBERS.airFriction);
             }
 
-            if(that.movement.length() < 0.1)
-            {
+            if (that.movement.length() < 0.1) {
                 that.movement.setLength(0);
                 return;
             }
@@ -147,7 +145,7 @@ class PhysicsObject extends GameObject {
     }
 
     limitSpeed(vector) {
-        if(vector.length() > this.maxMovementPerFrame) {
+        if (vector.length() > this.maxMovementPerFrame) {
 
             vector.setLength(this.maxMovementPerFrame);
             console.log("slowed it down", this.maxMovementPerFrame);
