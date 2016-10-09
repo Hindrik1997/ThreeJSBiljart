@@ -6,10 +6,15 @@ class Game {
         this.camera.position.z = 7;
         this.camera.position.y = 5;
 
+        //this.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(80, 1, 1, 2500));
+
         let body = $("body");
         body.css("background-color", "black");
         this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
         this.renderer.setSize(body.width(), body.height());
+
+        this.renderer.shadowMapEnabled = true;
+        this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
         body.append(this.renderer.domElement);
 
         // Initialize update array
@@ -34,7 +39,6 @@ class Game {
                     GAME.useCueCam = !m;
             }
         }, false);
-
     }
 
     //noinspection JSMethodCanBeStatic
@@ -54,6 +58,7 @@ class Game {
         });
         if (GAME.useCueCam) GAME.renderer.render(GAME.scene, GAME.cuecam);
         else GAME.renderer.render(GAME.scene, GAME.camera);
+
     }
 
     // Registers a function and the object it belongs to, this makes it run every frame
@@ -78,7 +83,13 @@ class Game {
         // Light
         this.sun = new Sun();
         this.scene.add(this.sun);
+
         this.ambientLight = new THREE.AmbientLight(0x404040);
+
+        this.light = new THREE.SpotLight("white", 0.9);
+
+        this.light.position.set(0,6,0);
+        GAME.scene.add(this.light);
         GAME.scene.add(this.ambientLight);
 
         this.grass = this.createGrass();
@@ -90,6 +101,14 @@ class Game {
 
         this.cue = new Cue();
         GAME.scene.add(this.cue.pivotPoint);
+
+        for(var i = this.scene.children.length - 1; i >= 0; i--)
+        {
+            if(this.scene.children[i] instanceof(THREE.Light))
+                continue;
+            this.scene.children[i].receiveShadow = true;
+            this.scene.children[i].castShadow = true;
+        }
     }
 
     //noinspection JSMethodCanBeStatic
@@ -99,7 +118,7 @@ class Game {
         let grassTex = tcl.load("imgs/grass.jpg");
 
         grassTex.wrapT = grassTex.wrapS = THREE.RepeatWrapping;
-        grassTex.repeat.set(50, 50);
+        grassTex.repeat.set(125, 125);
 
         let planeGeom = new THREE.PlaneGeometry(1000, 1000);
         planeGeom.rotateX(-Math.PI / 2);

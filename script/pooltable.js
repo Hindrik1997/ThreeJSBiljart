@@ -17,8 +17,7 @@ class PoolTable
             metalness : 0.15
         });
 
-
-        this.basePlate = new CubeObject(basePlateGeom, basePlateMat, false);
+       this.basePlate = new CubeObject(basePlateGeom, basePlateMat, false);
 
         let standMat = new THREE.MeshPhysicalMaterial({
             reflectivity : 0.6,
