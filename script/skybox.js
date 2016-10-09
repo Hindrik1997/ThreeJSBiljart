@@ -1,8 +1,3 @@
-/**
- * Created by hindr on 9/14/2016.
- */
-
-
 class SkyBox {
     constructor(posX, negX, posY, negY, posZ, negZ) {
         let pref = "imgs/";

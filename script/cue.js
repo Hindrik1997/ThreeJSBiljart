@@ -1,6 +1,3 @@
-/**
- * Created by jornv on 9/30/2016.
- */
 class Cue extends GameObject {
     constructor() {
         let geometry = new THREE.CylinderGeometry(0.05, 0.05, 5);

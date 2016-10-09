@@ -1,6 +1,3 @@
-/**
- * Created by jornv on 10/6/2016.
- */
 class Pocket extends CubeObject {
     constructor(x, z) {
         const pocketDetectorHeight = 2;
