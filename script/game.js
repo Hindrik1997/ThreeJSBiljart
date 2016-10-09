@@ -182,7 +182,7 @@ class Game {
             this.balls.push(ball);
         }
 
-        let rad = this.balls[0].mesh.geometry.parameters.radius;
+        let rad = this.balls[0].mesh.geometry.parameters.radius + 0.02;
 
         shuffle(this.balls);
 
