@@ -56,7 +56,18 @@ class PhysicsObject extends GameObject {
             this.movement = newMovement.setLength(totalLength);
         }
 
-        this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
+        //this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
+        this.mesh.position.add(normal.setLength(this.getDistanceToClosest(normal, otherObject) + this.maxMovementPerFrame));
+    }
+
+    getDistanceToClosest(direction, object) {
+        let tpRaycaster = new THREE.Raycaster(this.mesh.position, direction, 0, 100);
+        let point = tpRaycaster.intersectObject(object.mesh, true);
+        let distance = this.mesh.position.distanceTo(point);
+        console.log("point", point);
+        console.log("distance", distance);
+        return distance;
+
     }
 
     getSurfaceNormal(otherObject) {

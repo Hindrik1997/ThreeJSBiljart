@@ -30,7 +30,6 @@ class Cue extends GameObject {
 
                 let direction = ballWorldPos.clone().sub(cueWorldPos.clone());
 
-                console.log(direction);
                 GAME.whiteBall.movement = direction.setLength(8);
             });
 
