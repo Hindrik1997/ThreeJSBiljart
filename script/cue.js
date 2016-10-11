@@ -30,6 +30,7 @@ class Cue extends GameObject {
                 let direction = ballWorldPos.clone().sub(cueWorldPos.clone());
 
                 GAME.whiteBall.movement = direction.setLength(8);
+                GAME.useCueCam = false;
             });
 
         this.backwardTween = new TWEEN.Tween(currentPos).to({z: defaultZ}, 1000)
@@ -96,6 +97,8 @@ class Cue extends GameObject {
         if (GAME.areAllBallsStationary() && !GAME.whiteBall.isInPocket) {
             that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
             that.mesh.material.visible = true;
+        } else {
+            GAME.camera.lookAt(GAME.whiteBall.mesh.position);
         }
     }
 

@@ -63,14 +63,6 @@ class PhysicsObject extends GameObject {
         otherObject.mesh.position.set(otherObject.prevPosition.x, otherObject.prevPosition.y, otherObject.prevPosition.z);
     }
 
-    getDistanceToClosest(direction, object) {
-        let tpRaycaster = new THREE.Raycaster(this.mesh.position, direction, 0, 100);
-        let point = tpRaycaster.intersectObject(object.mesh, true);
-        let distance = this.mesh.position.distanceTo(point);
-        return distance;
-
-    }
-
     getSurfaceNormal(otherObject) {
         if (otherObject instanceof SphereObject) {
             let posCpy = this.mesh.position.clone();
