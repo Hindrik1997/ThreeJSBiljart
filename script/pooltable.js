@@ -41,10 +41,10 @@ class PoolTable
         let lrSideBORDER = new THREE.BoxGeometry(width * 0.025, 0.5, height * 1.05);
         let tdSideBORDER = new THREE.BoxGeometry(width * 1.2 - (2 * width * 0.05) , 0.5, width * 0.025);
 
-        let tdSide = new THREE.BoxGeometry(width * 0.985 - (2 * width * 0.105) / 2 , 0.5, width * 0.05);
+        let tdSide = new THREE.BoxGeometry(width * 0.985 - (2 * width * 0.135) / 2 , 0.5, width * 0.05);
 
-        let lrSideDown = new THREE.BoxGeometry(width * 0.05, 0.5, height * 0.89 / 2);
-        let lrSideTop = new THREE.BoxGeometry(width * 0.05, 0.5, height * 0.89 / 2);
+        let lrSideDown = new THREE.BoxGeometry(width * 0.05, 0.5, height * 0.85 / 2);
+        let lrSideTop = new THREE.BoxGeometry(width * 0.05, 0.5, height * 0.85 / 2);
 
         let sideDL = new CubeObject(lrSideDown, sideMat, false);
         let sideTL = new CubeObject(lrSideTop, sideMat, false);

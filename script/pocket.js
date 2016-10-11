@@ -4,7 +4,7 @@ class Pocket extends CubeObject {
         const pocketDetectorWidth = 0.1;
 
         const blackHoleHeight = 0.001;
-        const blackHoleWidth = 0.4;
+        const blackHoleWidth = 0.5;
 
         let geometry =  new THREE.BoxGeometry(pocketDetectorWidth, pocketDetectorHeight, pocketDetectorWidth);
         let material = new THREE.MeshBasicMaterial({visible: false });
