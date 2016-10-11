@@ -7,7 +7,6 @@ class Cue extends GameObject {
         this.pivotPoint = new THREE.Object3D();
         this.mesh.rotateX(Math.PI / 2);
         this.mesh.position.set(0, 0, 0);
-        console.log(this);
 
         const touchingBallZ = -this.mesh.geometry.parameters.height / 2;
         const defaultZ = touchingBallZ - 0.5;

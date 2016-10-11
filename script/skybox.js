@@ -2,7 +2,6 @@ class SkyBox {
     constructor(posX, negX, posY, negY, posZ, negZ) {
         let pref = "imgs/";
         this.urls = [posX, negX, posY, negY, posZ, negZ];
-        console.log("first pos in urls", this.urls[0]);
         let skyGeom = new THREE.CubeGeometry(1000, 1000, 1000);
         let matArr = [];
 
