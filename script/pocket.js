@@ -30,27 +30,28 @@ class Pocket extends CubeObject {
             .to({x: this.mesh.position.x, y: this.mesh.position.y - 2, z: this.mesh.position.z}, 500)
             .easing(TWEEN.Easing.Linear.None)
             .onUpdate(function () {
-                console.log("stopped");
                 otherObject.mesh.position.setX(this.x);
                 otherObject.mesh.position.setY(this.y);
                 otherObject.mesh.position.setZ(this.z);
             })
             .onComplete(function() {
-                if(otherObject instanceof BallObject && otherObject.ballNr == 0)
+                if(otherObject === GAME.whiteBall)
                 {
-                    otherObject.mesh.position.set(0,0,0);
-                    otherObject.mesh.translateY(GAME.poolTable.plateY + GAME.whiteBall.distanceToGround);
+                    console.log("pocketed whiteball, oops");
+                    otherObject.mesh.position.set(0,GAME.poolTable.plateY + GAME.whiteBall.distanceToGround,0);
                     GAME.collisionController.registerObject(otherObject);
+                    otherObject.isMovable = true;
                     otherObject.isInPocket = false;
-
-                    return;
+                    otherObject.prevPosition = otherObject.mesh.position;
+                    console.log(otherObject);
                 }
-                otherObject.mesh.material.visible = false;
-                console.log("stillmoving", otherObject.isMoving);
+                else {
+                    otherObject.mesh.material.visible = false;
+                }
 
             });
 
-        console.log("going down");
+        console.log("ddd ", downTween);
 
 
 
