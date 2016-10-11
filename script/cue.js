@@ -55,14 +55,24 @@ class Cue extends GameObject {
 
         window.addEventListener('keydown', function (data) {
             let rotationQuaternion;
+
+            // Detect if shift is pressed
+            let multiplier = 1;
+            if(data.shiftKey) {
+                multiplier *= 2;
+            }
+            if(data.ctrlKey) {
+                multiplier *= 4;
+            }
+
             switch (data.keyCode) {
                 case 37: // Left
-                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -0.01);
+                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -0.01 * multiplier);
                     GAME.cue.pivotPoint.quaternion.premultiply(rotationQuaternion);
                     break;
 
                 case 39: // Right
-                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.01);
+                    rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.01 * multiplier);
                     GAME.cue.pivotPoint.quaternion.premultiply(rotationQuaternion);
                     break;
 
