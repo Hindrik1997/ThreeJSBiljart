@@ -67,8 +67,6 @@ class PhysicsObject extends GameObject {
         let tpRaycaster = new THREE.Raycaster(this.mesh.position, direction, 0, 100);
         let point = tpRaycaster.intersectObject(object.mesh, true);
         let distance = this.mesh.position.distanceTo(point);
-        console.log("point", point);
-        console.log("distance", distance);
         return distance;
 
     }
@@ -162,7 +160,7 @@ class PhysicsObject extends GameObject {
         if (vector.length() > this.maxMovementPerFrame) {
 
             vector.setLength(this.maxMovementPerFrame);
-            console.log("slowed it down", this.maxMovementPerFrame);
+            //console.log("slowed it down", this.maxMovementPerFrame);
         }
     }
 

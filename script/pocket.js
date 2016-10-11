@@ -20,12 +20,12 @@ class Pocket extends CubeObject {
     }
 
     collidedWith(otherObject) {
-        console.log("stopping movement");
+        //stop movement
         otherObject.movement.set(0,0,0);
         otherObject.isMovable = false;
         otherObject.isInPocket = true;
         GAME.collisionController.deregisterObject(otherObject);
-        console.log("going down");
+        //going down
 
         let downTween = new TWEEN.Tween({x: otherObject.mesh.position.x, y: otherObject.mesh.position.y, z: otherObject.mesh.position.z})
             .to({x: this.mesh.position.x, y: this.mesh.position.y - 2, z: this.mesh.position.z}, 500)
@@ -38,7 +38,7 @@ class Pocket extends CubeObject {
             .onComplete(function() {
                 if(otherObject === GAME.whiteBall)
                 {
-                    console.log("pocketed whiteball, oops");
+                    //pocketed white ball, oops
                     otherObject.mesh.position.set(0,GAME.poolTable.plateY + GAME.whiteBall.distanceToGround,0);
                     GAME.collisionController.registerObject(otherObject);
                     otherObject.isMovable = true;
@@ -51,10 +51,6 @@ class Pocket extends CubeObject {
                 }
 
             });
-
-        console.log("ddd ", downTween);
-
-
 
         downTween.start();
     }

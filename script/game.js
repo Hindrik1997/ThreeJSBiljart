@@ -11,8 +11,6 @@ class Game {
         this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
         this.renderer.setSize(body.width(), body.height());
 
-        this.renderer.shadowMapEnabled = true;
-        this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
         body.append(this.renderer.domElement);
 
         // Initialize update array
@@ -98,14 +96,6 @@ class Game {
 
         this.cue = new Cue();
         GAME.scene.add(this.cue.pivotPoint);
-
-        for(var i = this.scene.children.length - 1; i >= 0; i--)
-        {
-            if(this.scene.children[i] instanceof(THREE.Light))
-                continue;
-            this.scene.children[i].receiveShadow = true;
-            this.scene.children[i].castShadow = true;
-        }
     }
 
     //noinspection JSMethodCanBeStatic
