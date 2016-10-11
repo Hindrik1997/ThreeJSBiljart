@@ -37,6 +37,9 @@ class Cue extends GameObject {
             .easing(TWEEN.Easing.Linear.None)
             .onUpdate(function () {
                 that.mesh.position.setZ(this.z);
+            })
+            .onComplete(function () {
+                that.mesh.material.visible = false;
             });
 
         this.forwardTween.chain(this.backwardTween);
@@ -91,8 +94,9 @@ class Cue extends GameObject {
 
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
-        if (!GAME.whiteBall.isMoving && !GAME.whiteBall.isInPocket) {
+        if (GAME.areAllBallsStationary() && !GAME.whiteBall.isInPocket) {
             that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
+            that.mesh.material.visible = true;
         }
     }
 

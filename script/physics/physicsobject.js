@@ -37,7 +37,6 @@ class PhysicsObject extends GameObject {
         let normal = this.getSurfaceNormal(otherObject).negate(),
             totalLength = this.movement.length() + otherObject.movement.length();
         if (totalLength === 0) return;
-        this.normalAH.setDirection(normal);
 
         this.movement.normalize();
         let newMovement = this.movement.sub(normal.multiplyScalar(this.movement.dot(normal) * 2));

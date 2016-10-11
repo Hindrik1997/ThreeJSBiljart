@@ -1,8 +1,6 @@
 class SphereObject extends PhysicsObject {
     constructor(geometry, material, isMovable) {
         super(geometry, material, isMovable);
-        this.normalAH = new THREE.ArrowHelper(new THREE.Vector3(0,1,0), new THREE.Vector3(0, 4, 0), 1, 0xffff00);
-        GAME.scene.add(this.normalAH);
     }
 
     get maxMovementPerFrame() {
@@ -21,7 +19,6 @@ class SphereObject extends PhysicsObject {
 
         }
         else if (otherObject instanceof CubeObject) {
-            // TODO: move this calculation to a location separate from the cube and sphere objects
             otherObject.isCollidingWith(this);
         }
         else throw Error("Other object is invalid.");

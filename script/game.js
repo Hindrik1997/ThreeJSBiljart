@@ -3,10 +3,8 @@ class Game {
         // Setup Three.js base
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.camera.position.z = 7;
-        this.camera.position.y = 5;
-
-        //this.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(80, 1, 1, 2500));
+        this.camera.position.y = 10;
+        console.log(this.camera.rotation);
 
         let body = $("body");
         body.css("background-color", "black");
@@ -33,10 +31,9 @@ class Game {
         this.registerForUpdates(this.updateFrametime, this);
 
         window.addEventListener('keydown', function (data) {
-            if(data.keyCode == 70)
+            if(data.keyCode == 70) // F
             {
-                    let m = GAME.useCueCam;
-                    GAME.useCueCam = !m;
+                    GAME.useCueCam = !GAME.useCueCam;
             }
         }, false);
     }
