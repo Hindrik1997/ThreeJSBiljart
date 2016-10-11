@@ -8,11 +8,26 @@ body
     overflow: hidden;
 }
 
-#KeyBinds
+#keyBinds
 {
-    width: 100px;
-    height: 160px;
+    font-size: 20px;
     position : absolute;
-    background-color: cornflowerblue;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.6);
     color: ghostwhite;
+    padding: 20px;
+    border-radius: 0 20px 0 0;
+}
+
+#keyBinds td:first-child {
+    width: 300px;
+}
+
+#keyBinds td:last-child {
+    text-align: right;
+}
+
+#keyBinds p {
+    margin-top: 20px;
+    font-style: italic;
 }

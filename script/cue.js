@@ -56,13 +56,16 @@ class Cue extends GameObject {
         window.addEventListener('keydown', function (data) {
             let rotationQuaternion;
 
-            // Detect if shift is pressed
+            // Detect if shift, ctrl or alt is pressed
             let multiplier = 1;
             if(data.shiftKey) {
                 multiplier *= 2;
             }
             if(data.ctrlKey) {
                 multiplier *= 4;
+            }
+            if(data.altKey) {
+                multiplier *= 0.5;
             }
 
             switch (data.keyCode) {
