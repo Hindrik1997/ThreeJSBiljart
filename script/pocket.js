@@ -37,7 +37,7 @@ class Pocket extends CubeObject {
             })
             .onComplete(function() {
                 otherObject.mesh.material.visible = false;
-                console.log("stillmoving", otherObject.movement.length() != 0);
+                console.log("stillmoving", otherObject.isMoving);
 
 
             });
