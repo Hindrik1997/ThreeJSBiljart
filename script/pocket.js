@@ -1,10 +1,11 @@
 class Pocket extends CubeObject {
-    constructor(x, z) {
+    constructor(x, z, width, height, offsetx, offsety) {
         const pocketDetectorHeight = 2;
         const pocketDetectorWidth = 0.1;
 
         const blackHoleHeight = 0.001;
-        const blackHoleWidth = 0.5;
+        const blackHoleWidth = width;
+        const blackholeHeight = height;
 
         let geometry =  new THREE.BoxGeometry(pocketDetectorWidth, pocketDetectorHeight, pocketDetectorWidth);
         let material = new THREE.MeshBasicMaterial({visible: false });
@@ -12,10 +13,10 @@ class Pocket extends CubeObject {
         this.mesh.position.set(x, GAME.poolTable.plateY, z);
         this.boundingBoxHelper.update();
 
-        let blackHoleGeometry = new THREE.BoxGeometry(blackHoleWidth, blackHoleHeight, blackHoleWidth);
+        let blackHoleGeometry = new THREE.BoxGeometry(blackHoleWidth, blackHoleHeight, blackholeHeight);
         let blackHoleMaterial = new THREE.MeshBasicMaterial({color: "black"});
         this.blackHoleMesh = new THREE.Mesh(blackHoleGeometry, blackHoleMaterial);
-        this.blackHoleMesh.position.set(this.mesh.position.x, this.mesh.position.y, this.mesh.position.z);
+        this.blackHoleMesh.position.set(this.mesh.position.x + offsetx, this.mesh.position.y, this.mesh.position.z + offsety);
     }
 
     collidedWith(otherObject) {

@@ -133,14 +133,14 @@ class Game {
     addPockets() {
         this.pockets = [];
 
-        let pocketLeftMiddle = new Pocket(2.5,0);
-        let pocketRightMiddle = new Pocket(-2.5,0);
+        let pocketLeftMiddle = new Pocket(2.5,0, 0.25, 0.5,0,0);
+        let pocketRightMiddle = new Pocket(-2.5,0, 0.25, 0.5,0,0);
 
-        let pocketLeftBottom = new Pocket(2.5,-4);
-        let pocketRightBottom = new Pocket(-2.5,-4);
+        let pocketLeftBottom = new Pocket(2.5,-4,   0.5, 0.6, -0.13, 0.05);
+        let pocketRightBottom = new Pocket(-2.5,-4, 0.5, 0.6,  0.13, 0.05);
 
-        let pocketLeftTop = new Pocket(2.5,4);
-        let pocketRightTop = new Pocket(-2.5,4);
+        let pocketLeftTop = new Pocket(  2.5,4, 0.5, 0.6, -0.13, -0.05);
+        let pocketRightTop = new Pocket(-2.5,4, 0.5, 0.6,  0.13, -0.05);
 
 
 
