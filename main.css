@@ -7,3 +7,12 @@ body
 {
     overflow: hidden;
 }
+
+#KeyBinds
+{
+    width: 100px;
+    height: 160px;
+    position : absolute;
+    background-color: cornflowerblue;
+    color: ghostwhite;
+}
