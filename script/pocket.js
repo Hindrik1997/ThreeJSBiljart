@@ -36,13 +36,23 @@ class Pocket extends CubeObject {
                 otherObject.mesh.position.setZ(this.z);
             })
             .onComplete(function() {
+                if(otherObject instanceof BallObject && otherObject.ballNr == 0)
+                {
+                    otherObject.mesh.position.set(0,0,0);
+                    otherObject.mesh.translateY(GAME.poolTable.plateY + GAME.whiteBall.distanceToGround);
+                    GAME.collisionController.registerObject(otherObject);
+                    otherObject.isInPocket = false;
+
+                    return;
+                }
                 otherObject.mesh.material.visible = false;
                 console.log("stillmoving", otherObject.isMoving);
-
 
             });
 
         console.log("going down");
+
+
 
         downTween.start();
     }
