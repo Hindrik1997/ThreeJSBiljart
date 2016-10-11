@@ -56,9 +56,12 @@ class PhysicsObject extends GameObject {
             this.movement = newMovement.setLength(totalLength);
         }
 
+        if(this.mesh.position === this.prevPosition) {
+            console.log("tping to same position");
+        }
+
         this.mesh.position.set(this.prevPosition.x, this.prevPosition.y, this.prevPosition.z);
         otherObject.mesh.position.set(otherObject.prevPosition.x, otherObject.prevPosition.y, otherObject.prevPosition.z);
-        //this.mesh.position.add(normal.setLength(this.getDistanceToClosest(normal, otherObject) + this.maxMovementPerFrame));
     }
 
     getDistanceToClosest(direction, object) {
