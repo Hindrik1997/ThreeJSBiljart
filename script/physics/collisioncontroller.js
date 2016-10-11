@@ -10,7 +10,7 @@ class CollisionController {
     deregisterObject(object) {
         let index = this.collidableObjects.indexOf(object);
         if (index < 0) return;
-        this.collidableObjects.splice(index);
+        this.collidableObjects.splice(index, 1);
     }
 
     //noinspection JSMethodCanBeStatic
