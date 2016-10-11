@@ -17,16 +17,11 @@ class CubeObject extends PhysicsObject {
         return this.mesh.geometry.parameters.height / 2;
     }
 
-// TODO: include angle for exchange of force during collision
     isCollidingWith(otherObject) {
         if (otherObject instanceof SphereObject) {
             let dist = this.boundingBoxHelper.box.distanceToPoint(otherObject.mesh.position);
             let radius = otherObject.mesh.geometry.boundingSphere.radius;
             return dist < radius;
-        }
-        else if (otherObject instanceof CubeObject) {
-
-            // return this.boundingBoxHelper.box.intersectsBox(otherObject.boundingBoxHelper.box);
         }
     }
 
