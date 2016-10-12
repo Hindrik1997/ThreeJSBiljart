@@ -18,6 +18,10 @@ class Utils
         das.f;
     }
 
+    static getRandomColor() {
+    return Math.floor(Math.random() * 0xffffff);
+}
+
     static ballNumberToColor(number) {
         if(number === 0) return "white";
         if(number === 8) return "black";

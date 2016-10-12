@@ -18,10 +18,6 @@ function initThree() {
     GAME.render();
 }
 
-function getRandomColor() {
-    return Math.floor(Math.random() * 0xffffff);
-}
-
 function resizeWindow() {
     let body = $("body");
     let h = body.height();
