@@ -26,7 +26,7 @@ class Pocket extends CubeObject {
         otherObject.isMovable = false;
         otherObject.isInPocket = true;
 
-        GAME.playerManager.lastPocketUsed = this;
+        GAME.playerManager.currentPlayer.lastPocketUsed = this;
 
         // After the first ball is pocketed, assign the colors to the players
         if(GAME.playerManager.currentPlayer.color === Color.UNDECIDED)
