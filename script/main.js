@@ -5,7 +5,9 @@ $(document).ready(function () {
 });
 
 function initThree() {
-    GAME = new Game();
+    let player1name = prompt("Enter player one name.");
+    let player2name = prompt("Enter player two name.");
+    GAME = new Game(player1name, player2name);
     GAME.createObjects();
     PHYSICSNUMBERS = new PhysicsNumbers();
     $(window).resize(function () {
@@ -14,10 +16,6 @@ function initThree() {
 
     // Start the render loop
     GAME.render();
-}
-
-function getRandomColor() {
-    return Math.floor(Math.random() * 0xffffff);
 }
 
 function resizeWindow() {
