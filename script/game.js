@@ -74,9 +74,12 @@ class Game {
     }
 
     updateGUI(that) {
+        that.player1Display.find(".color").text(that.playerManager.players[0].color.name);
         let player1Balls = that.playerManager.players[0].getRemainingBalls();
         if(player1Balls === undefined) player1Balls = "No color";
         that.player1Display.find(".ballAmount").text(player1Balls);
+
+        that.player2Display.find(".color").text(that.playerManager.players[1].color.name);
         let player2Balls = that.playerManager.players[1].getRemainingBalls();
         if(player2Balls === undefined) player2Balls = "No color";
         that.player2Display.find(".ballAmount").text(player2Balls);

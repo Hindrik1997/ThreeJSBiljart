@@ -1,5 +1,5 @@
 Color = {
-    UNDECIDED: 0,
-    RED: 1,
-    BLUE: 2
+    UNDECIDED: {id: 0, name: "undecided"},
+    RED: {id: 1, name: "red"},
+    BLUE: {id: 2, name: "blue"}
 };
