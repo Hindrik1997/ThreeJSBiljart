@@ -134,6 +134,18 @@ class Game {
 
 
 
+        pocketLeftMiddle.opposite = pocketRightMiddle;
+
+        pocketRightMiddle.opposite = pocketLeftMiddle;
+
+        pocketLeftTop.opposite = pocketRightBottom;
+
+        pocketLeftBottom.opposite = pocketRightTop;
+
+        pocketRightTop.opposite = pocketLeftBottom;
+
+        pocketRightBottom.opposite = pocketLeftTop;
+
         this.scene.add(pocketLeftMiddle.mesh);
         this.scene.add(pocketLeftMiddle.blackHoleMesh);
         this.pockets.push(pocketLeftMiddle);
@@ -239,11 +251,6 @@ class Game {
 
         this.balls[13].mesh.translateZ(rad * 8);
 
-
-
-
-
-
         let blackBall = new BallObject(8, new THREE.SphereGeometry(0.1, 30, 30), new THREE.MeshPhysicalMaterial({
             color: "black",
             metalness: 0.05
@@ -257,8 +264,6 @@ class Game {
         this.whiteBall.mesh.translateY(this.poolTable.plateY + this.whiteBall.distanceToGround);
         this.scene.add(this.whiteBall.mesh);
         this.balls.push(this.whiteBall);
-
-
     }
 }
 
