@@ -10,7 +10,6 @@ class PlayerManager {
     }
 
     doTurn() {
-        this.currentlyPlaying = true;
         GAME.cue.play();
     }
 

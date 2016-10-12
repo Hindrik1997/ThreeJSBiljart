@@ -31,6 +31,7 @@ class Cue extends GameObject {
 
                 GAME.whiteBall.movement = direction.setLength(8);
                 GAME.useCueCam = false;
+                GAME.playerManager.currentlyPlaying = true;
             });
 
         this.backwardTween = new TWEEN.Tween(currentPos).to({z: defaultZ}, 1000)
