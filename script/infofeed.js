@@ -1,6 +1,3 @@
-/**
- * Created by jornv on 10/11/2016.
- */
 class InfoFeed {
     constructor() {
         this.isShowing = false;

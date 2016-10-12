@@ -1,0 +1,53 @@
+class PlayerManager
+{
+    constructor(playername1, playername2)
+    {
+        this.currentlyPlaying = false;
+        this.players = [];
+
+        this.players.push(new Player(playername1));
+        this.players.push(new Player(playername2));
+        this.currentPlayer = this.players[0];
+    }
+
+    doTurn()
+    {
+        this.currentlyPlaying = true;
+        GAME.cue.play();
+    }
+
+    endTurn()
+    {
+        this.currentlyPlaying = false;
+
+        this.swapPlayers();
+
+    }
+
+    swapPlayers()
+    {
+        if(this.currentPlayer == null)
+            return;
+
+        if(this.currentPlayer == this.players[0])
+        {
+            this.currentPlayer = this.players[1];
+        }
+        else
+            {
+                this.currentPlayer = this.players[0];
+            }
+    }
+
+
+    win()
+    {
+        
+    }
+
+    lose()
+    {
+
+    }
+
+}

@@ -83,7 +83,7 @@ class Cue extends GameObject {
                     break;
 
                 case 32: // Space
-                    GAME.cue.play();
+                    GAME.playerManager.doTurn();
                     break;
             }
 
@@ -95,6 +95,10 @@ class Cue extends GameObject {
     //noinspection JSMethodCanBeStatic
     updatePosition(that) {
         if (GAME.areAllBallsStationary() && !GAME.whiteBall.isInPocket) {
+
+            if(GAME.playerManager.currentlyPlaying == true)
+                GAME.playerManager.endTurn();
+
             that.pivotPoint.position.set(GAME.whiteBall.mesh.position.x, GAME.whiteBall.mesh.position.y, GAME.whiteBall.mesh.position.z);
             that.mesh.material.visible = true;
         } else {

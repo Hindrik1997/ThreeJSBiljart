@@ -1,11 +1,12 @@
 class Game {
-    constructor() {
+    constructor(playername1, playername2) {
         // Setup Three.js base
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.y = 6;
         this.camera.position.x = 4;
-        console.log(this.camera.rotation);
+
+        this.playerManager = new PlayerManager(playername1, playername2);
 
         let body = $("body");
         body.css("background-color", "black");
@@ -258,6 +259,7 @@ class Game {
         blackBall.mesh.translateZ(rad * 4);
         this.scene.add(blackBall.mesh);
         this.balls.push(blackBall);
+        this.blackBall = blackBall;
 
         this.whiteBall.mesh.translateY(this.poolTable.plateY + this.whiteBall.distanceToGround);
         this.scene.add(this.whiteBall.mesh);
