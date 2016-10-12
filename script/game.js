@@ -132,8 +132,6 @@ class Game {
         let pocketLeftTop = new Pocket(  2.5,4, 0.5, 0.6, -0.13, -0.05);
         let pocketRightTop = new Pocket(-2.5,4, 0.5, 0.6,  0.13, -0.05);
 
-
-
         pocketLeftMiddle.opposite = pocketRightMiddle;
 
         pocketRightMiddle.opposite = pocketLeftMiddle;
