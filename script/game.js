@@ -34,7 +34,9 @@ class Game {
         this.player1Display.find(".name").text(playername1);
         this.player2Display.find(".name").text(playername2);
 
+
         this.playerManager = new PlayerManager(playername1, playername2);
+
 
         this.registerForUpdates(this.updateGUI, this);
 
@@ -85,12 +87,12 @@ class Game {
 
 
 
-        that.player1Display.find(".color").text(that.playerManager.players[0].color.name);
+        that.player1Display.find(".color").text(that.playerManager.players[0].color.name == "green" ? "undecided" : that.playerManager.players[0].color.name);
         let player1Balls = that.playerManager.players[0].getRemainingBalls();
         if(player1Balls === undefined) player1Balls = 7;
         that.player1Display.find(".ballAmount").text(player1Balls);
 
-        that.player2Display.find(".color").text(that.playerManager.players[1].color.name);
+        that.player2Display.find(".color").text(that.playerManager.players[1].color.name == "green" ? "undecided" : that.playerManager.players[1].color.name);
         let player2Balls = that.playerManager.players[1].getRemainingBalls();
         if(player2Balls === undefined) player2Balls = 7;
         that.player2Display.find(".ballAmount").text(player2Balls);
@@ -104,6 +106,8 @@ class Game {
     }
 
     createObjects() {
+        GAME.registerForUpdates(this.playerManager.update, this.playerManager);
+
         this.poolTable = new PoolTable(5, 8);
         this.scene.add(this.poolTable.group);
 

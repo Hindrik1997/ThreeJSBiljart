@@ -9,6 +9,21 @@ class PlayerManager {
         this.currentPlayer = this.players[0];
     }
 
+    update(that)
+    {
+
+        for(let hole of GAME.pockets)
+        {
+            hole.blackHoleMesh.material.color.set("black");
+        }
+
+        if(that.currentPlayer.getRemainingBalls() == 0)
+        {
+            that.currentPlayer.lastPocketUsed.blackHoleMesh.material.color.set("purple");
+        }
+    }
+
+
     doTurn() {
         GAME.cue.play();
     }
