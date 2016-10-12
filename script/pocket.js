@@ -25,6 +25,28 @@ class Pocket extends CubeObject {
         otherObject.movement.set(0,0,0);
         otherObject.isMovable = false;
         otherObject.isInPocket = true;
+
+        if(GAME.playerManager.currentPlayer.color === Color.UNDECIDED)
+        {
+            if(Utils.ballNumberToColor(otherObject.ballNr) == "red")
+            {
+                GAME.playerManager.currentPlayer.color = Color.RED;
+                GAME.playerManager.swapPlayers();
+                GAME.playerManager.currentPlayer.color = Color.BLUE;
+                GAME.playerManager.swapPlayers();
+            }
+            else
+                if(Utils.ballNumberToColor(otherObject.ballNr) == "blue")
+                {
+                    GAME.playerManager.currentPlayer.color = Color.BLUE;
+                    GAME.playerManager.swapPlayers();
+                    GAME.playerManager.currentPlayer.color = Color.RED;
+                    GAME.playerManager.swapPlayers();
+                }
+                //else somebody lost or pocketed white ball
+        }
+
+
         GAME.collisionController.deregisterObject(otherObject);
         //going down
 
@@ -47,9 +69,21 @@ class Pocket extends CubeObject {
                     otherObject.isMovable = true;
                     otherObject.isInPocket = false;
                     otherObject.prevPosition = otherObject.mesh.position;
-                    console.log(otherObject);
+
                 }
                 else {
+                    if(otherObject === GAME.blackBall){
+                        if(this === GAME.playerManager.currentPlayer.lastPocketUsed.opposite && GAME.playerManager.currentPlayer.getRemainingBalls() == 0)
+                        {
+                            //win
+                            GAME.playerManager.win();
+                        }
+                        else
+                        {
+                            //lose
+                            GAME.playerManager.lose();
+                        }
+                    } else
                     otherObject.mesh.material.visible = false;
                 }
 
