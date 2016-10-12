@@ -35,6 +35,8 @@ class Game {
                     GAME.useCueCam = !GAME.useCueCam;
             }
         }, false);
+
+        this.infofeed = new InfoFeed();
     }
 
     //noinspection JSMethodCanBeStatic

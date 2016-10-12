@@ -17,6 +17,7 @@ class Pocket extends CubeObject {
         let blackHoleMaterial = new THREE.MeshBasicMaterial({color: "black"});
         this.blackHoleMesh = new THREE.Mesh(blackHoleGeometry, blackHoleMaterial);
         this.blackHoleMesh.position.set(this.mesh.position.x + offsetx, this.mesh.position.y, this.mesh.position.z + offsety);
+
     }
 
     collidedWith(otherObject) {
@@ -26,6 +27,8 @@ class Pocket extends CubeObject {
         otherObject.isInPocket = true;
         GAME.collisionController.deregisterObject(otherObject);
         //going down
+
+        GAME.infofeed.writeBallPocketed(otherObject);
 
         let downTween = new TWEEN.Tween({x: otherObject.mesh.position.x, y: otherObject.mesh.position.y, z: otherObject.mesh.position.z})
             .to({x: this.mesh.position.x, y: this.mesh.position.y - 2, z: this.mesh.position.z}, 500)
