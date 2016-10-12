@@ -18,6 +18,7 @@ class PlayerManager {
         this.currentlyPlaying = false;
         if(!this.playerNewTurn)
             this.swapPlayers();
+        this.playerNewTurn = false;
     }
 
     swapPlayers() {
