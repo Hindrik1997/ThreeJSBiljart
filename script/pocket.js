@@ -28,6 +28,8 @@ class Pocket extends CubeObject {
 
         GAME.playerManager.currentPlayer.lastPocketUsed = this;
 
+        GAME.playerManager.playerNewTurn = GAME.playerManager.currentPlayer.color.name === Utils.ballNumberToColor(otherObject.ballNr);
+        
         // After the first ball is pocketed, assign the colors to the players
         if(GAME.playerManager.currentPlayer.color === Color.UNDECIDED)
         {

@@ -3,6 +3,7 @@ class PlayerManager {
         this.currentlyPlaying = false;
         this.players = [];
 
+        this.playerNewTurn = false;
         this.players.push(new Player(playername1));
         this.players.push(new Player(playername2));
         this.currentPlayer = this.players[0];
@@ -15,9 +16,8 @@ class PlayerManager {
 
     endTurn() {
         this.currentlyPlaying = false;
-
-        this.swapPlayers();
-
+        if(!this.playerNewTurn)
+            this.swapPlayers();
     }
 
     swapPlayers() {
