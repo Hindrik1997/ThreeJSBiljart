@@ -6,8 +6,6 @@ class Game {
         this.camera.position.y = 6;
         this.camera.position.x = 4;
 
-        this.playerManager = new PlayerManager(playername1, playername2);
-
         let body = $("body");
         body.css("background-color", "black");
         this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
@@ -29,6 +27,16 @@ class Game {
         this.clock = new THREE.Clock(true);
         this.frameTime = 0;
         this.registerForUpdates(this.updateFrametime, this);
+
+        this.player1Display = $("#player1");
+        this.player2Display = $("#player2");
+
+        this.player1Display.find(".name").text(playername1);
+        this.player2Display.find(".name").text(playername2);
+
+        this.playerManager = new PlayerManager(playername1, playername2);
+
+        this.registerForUpdates(this.updateGUI, this);
 
         window.addEventListener('keydown', function (data) {
             if(data.keyCode == 70) // F
@@ -63,6 +71,15 @@ class Game {
     // Registers a function and the object it belongs to, this makes it run every frame
     registerForUpdates(func, that) {
         this.updateList.push({function: func, that: that});
+    }
+
+    updateGUI(that) {
+        let player1Balls = that.playerManager.players[0].getRemainingBalls();
+        if(player1Balls === undefined) player1Balls = "No color";
+        that.player1Display.find(".ballAmount").text(player1Balls);
+        let player2Balls = that.playerManager.players[1].getRemainingBalls();
+        if(player2Balls === undefined) player2Balls = "No color";
+        that.player2Display.find(".ballAmount").text(player2Balls);
     }
 
     areAllBallsStationary() {
