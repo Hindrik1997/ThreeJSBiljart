@@ -1,7 +1,5 @@
-class PlayerManager
-{
-    constructor(playername1, playername2)
-    {
+class PlayerManager {
+    constructor(playername1, playername2) {
         this.currentlyPlaying = false;
         this.players = [];
 
@@ -10,46 +8,39 @@ class PlayerManager
         this.currentPlayer = this.players[0];
     }
 
-    doTurn()
-    {
+    doTurn() {
         this.currentlyPlaying = true;
         GAME.cue.play();
     }
 
-    endTurn()
-    {
+    endTurn() {
         this.currentlyPlaying = false;
 
         this.swapPlayers();
 
     }
 
-    swapPlayers()
-    {
-        if(this.currentPlayer == null)
+    swapPlayers() {
+        if (this.currentPlayer == null)
             return;
 
-        if(this.currentPlayer == this.players[0])
-        {
+        if (this.currentPlayer == this.players[0]) {
             this.currentPlayer = this.players[1];
         }
-        else
-            {
-                this.currentPlayer = this.players[0];
-            }
+        else {
+            this.currentPlayer = this.players[0];
+        }
     }
 
 
-    win()
-    {
+    win() {
         this.swapPlayers();
 
         alert("You won the game!" + this.currentPlayer.name + " has lost the game!");
         this.swapPlayers();
     }
 
-    lose()
-    {
+    lose() {
         this.swapPlayers();
         alert(this.currentPlayer.name + " has won the game! You lost!");
         this.swapPlayers();
