@@ -1,14 +1,13 @@
 class Pocket extends CubeObject {
     constructor(x, z, width, height, offsetx, offsety) {
         const pocketDetectorHeight = 2;
-        const pocketDetectorWidth = 0.1;
 
         const blackHoleHeight = 0.001;
         const blackHoleWidth = width;
         const blackholeHeight = height;
 
-        let geometry =  new THREE.BoxGeometry(pocketDetectorWidth, pocketDetectorHeight, pocketDetectorWidth);
-        let material = new THREE.MeshBasicMaterial({color: "green", visible: true });
+        let geometry =  new THREE.BoxGeometry(blackHoleWidth / 2, pocketDetectorHeight, blackholeHeight / 2);
+        let material = new THREE.MeshBasicMaterial({color: "green", visible: false });
         super(geometry, material, false);
         this.mesh.position.set(x, GAME.poolTable.plateY, z);
         this.boundingBoxHelper.update();
@@ -18,6 +17,7 @@ class Pocket extends CubeObject {
         this.blackHoleMesh = new THREE.Mesh(blackHoleGeometry, blackHoleMaterial);
         this.blackHoleMesh.position.set(this.mesh.position.x + offsetx, this.mesh.position.y, this.mesh.position.z + offsety);
 
+        this.mesh.position.set(this.mesh.position.x + offsetx, this.mesh.position.y, this.mesh.position.z + offsety);
     }
 
     collidedWith(otherObject) {
@@ -25,6 +25,8 @@ class Pocket extends CubeObject {
         otherObject.movement.set(0,0,0);
         otherObject.isMovable = false;
         otherObject.isInPocket = true;
+
+        GAME.playerManager.lastPocketUsed = this;
 
         // After the first ball is pocketed, assign the colors to the players
         if(GAME.playerManager.currentPlayer.color === Color.UNDECIDED)

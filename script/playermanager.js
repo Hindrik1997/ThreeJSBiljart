@@ -42,12 +42,17 @@ class PlayerManager
 
     win()
     {
-        
+        this.swapPlayers();
+
+        alert("You won the game!" + this.currentPlayer.name + " has lost the game!");
+        this.swapPlayers();
     }
 
     lose()
     {
-
+        this.swapPlayers();
+        alert(this.currentPlayer.name + " has won the game! You lost!");
+        this.swapPlayers();
     }
 
 }
