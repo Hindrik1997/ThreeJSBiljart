@@ -6,6 +6,7 @@ html, body {
 
 body {
     overflow: hidden;
+    background-color: black;
 }
 
 .gui {
@@ -25,8 +26,8 @@ body {
 
 #keyBinds {
     font-size: 20px;
-    bottom: 0;
-    border-radius: 0 20px 0 0;
+    top: 0;
+    border-radius: 0 0 20px 0;
 }
 
 #keyBinds td:first-child {

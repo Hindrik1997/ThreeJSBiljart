@@ -269,7 +269,7 @@ THREE.OrbitControls = function ( object, domElement, localElement ) {
         offset.z = radius * Math.sin( phi ) * Math.cos( theta );
 
         position.copy( this.target ).add( offset );
-        
+
         this.object.lookAt( this.target );
 
         thetaDelta = 0;

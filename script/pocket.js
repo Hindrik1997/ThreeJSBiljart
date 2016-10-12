@@ -8,7 +8,7 @@ class Pocket extends CubeObject {
         const blackholeHeight = height;
 
         let geometry =  new THREE.BoxGeometry(pocketDetectorWidth, pocketDetectorHeight, pocketDetectorWidth);
-        let material = new THREE.MeshBasicMaterial({visible: false });
+        let material = new THREE.MeshBasicMaterial({color: "green", visible: true });
         super(geometry, material, false);
         this.mesh.position.set(x, GAME.poolTable.plateY, z);
         this.boundingBoxHelper.update();
