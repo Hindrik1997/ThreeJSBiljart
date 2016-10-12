@@ -74,6 +74,17 @@ class Game {
     }
 
     updateGUI(that) {
+        if(that.playerManager.currentPlayer === that.playerManager.players[0]) {
+            that.player1Display.css("background-color", that.playerManager.players[0].color.name);
+            that.player2Display.css("background-color", "rgba(0,0,0,0.6");
+        }
+        else {
+            that.player2Display.css("background-color", that.playerManager.players[1].color.name);
+            that.player1Display.css("background-color", "rgba(0,0,0,0.6");
+        }
+
+
+
         that.player1Display.find(".color").text(that.playerManager.players[0].color.name);
         let player1Balls = that.playerManager.players[0].getRemainingBalls();
         if(player1Balls === undefined) player1Balls = 7;
