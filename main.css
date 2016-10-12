@@ -16,17 +16,19 @@ body {
     padding: 20px;
 }
 
+.playerInfo {
+    width: 300px;
+}
+
 #player1 {
     bottom: 0;
     border-radius: 0 20px 0 0;
-    width: 500px;
 }
 
 #player2 {
     right: 0;
     bottom: 0;
     border-radius: 20px 0 0 0;
-    width: 500px;
     text-align: right;
 }
 
