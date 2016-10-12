@@ -18,7 +18,7 @@ class Player
         {
             let pocketcounter = 0;
 
-            for(ball in GAME.balls)
+            for(let ball of GAME.balls)
             {
                 if(ball.ballNr <= 8 || ball.ballNr == 0)
                 {
@@ -34,7 +34,7 @@ class Player
         {
             let pocketcounter = 0;
 
-            for(ball in GAME.balls)
+            for(let ball of GAME.balls)
             {
                 if(ball.ballNr >= 8|| ball.ballNr == 0)
                 {
